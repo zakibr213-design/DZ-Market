@@ -1,143 +1,177 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أعلن معنا | DZ Market Pro</title>
+    <title>أعلن معنا | DZ Market Advertising</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Cairo', sans-serif; }
-        .gradient-border { border: 2px solid transparent; background: linear-gradient(white, white) padding-box, linear-gradient(to right, #2563eb, #4f46e5) border-box; }
+        body { font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
+        .plan-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .plan-card:hover { transform: translateY(-12px); }
+        .modal-bg { transition: opacity 0.3s ease; }
+        input:invalid { border-color: #ef4444; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-slate-50 text-slate-900">
 
-    <div class="max-w-4xl mx-auto px-6 py-12">
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-black text-blue-900 mb-4">انضم إلى تجارنا وابدأ البيع اليوم</h1>
-            <p class="text-gray-600 italic">اختر الخطة المناسبة لك ووصل منتجاتك لآلاف الزبائن</p>
+    <header class="bg-white border-b border-slate-200 py-20 px-4 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full -mr-32 -mt-32 opacity-50"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <span class="bg-blue-600 text-white px-5 py-1.5 rounded-full text-xs font-black mb-6 inline-block uppercase tracking-wider shadow-lg shadow-blue-200">فرصة للتجار</span>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 mb-6 leading-[1.2]">ضاعف مبيعاتك مع <span class="text-blue-600">DZ Market</span></h1>
+            <p class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">نقدم لك منصة إعلانية متكاملة تصل لآلاف الزبائن في كافة الولايات الجزائرية بكل سهولة.</p>
         </div>
+    </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            <div class="bg-white p-8 rounded-[2.5rem] shadow-xl border border-gray-100 text-center relative overflow-hidden">
-                <div class="bg-blue-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <i class="fas fa-bullhorn text-blue-600 text-2xl"></i>
+    <section class="max-w-6xl mx-auto px-6 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            
+            <div class="plan-card bg-white p-10 rounded-[3rem] shadow-xl shadow-slate-200/50 border border-slate-100 text-center flex flex-col">
+                <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl shadow-inner">
+                    <i class="fas fa-bullhorn"></i>
                 </div>
-                <h3 class="text-2xl font-black mb-2">إعلان واحد</h3>
-                <p class="text-gray-400 text-sm mb-6">مثالي للمنتجات الموسمية</p>
-                <div class="text-4xl font-black text-blue-600 mb-6">120 <span class="text-sm">دج</span></div>
-                <ul class="text-right space-y-3 mb-8 text-gray-600">
-                    <li><i class="fas fa-check text-green-500 ml-2"></i> عرض لمدة 30 يوم كاملة</li>
-                    <li><i class="fas fa-check text-green-500 ml-2"></i> توجيه مباشر لواتساب متجرك</li>
-                    <li><i class="fas fa-check text-green-500 ml-2"></i> تنسيق مجاني للصور</li>
+                <h2 class="text-2xl font-black text-slate-800 mb-2">إعلان واحد</h2>
+                <p class="text-slate-400 text-sm mb-6">مثالي للمنتجات الموسمية</p>
+                <div class="text-5xl font-black text-slate-900 mb-8">500 <span class="text-lg font-bold text-slate-400">دج</span></div>
+                <ul class="text-right space-y-5 mb-10 text-slate-600 flex-1">
+                    <li class="flex items-center gap-3"><i class="fas fa-check bg-green-100 text-green-600 p-1 rounded-full text-[10px]"></i> عرض لمدة 30 يوم كاملة</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check bg-green-100 text-green-600 p-1 rounded-full text-[10px]"></i> توجيه مباشر لواتساب متجرك</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check bg-green-100 text-green-600 p-1 rounded-full text-[10px]"></i> تنسيق مجاني للصور والوصف</li>
                 </ul>
-                <button onclick="scrollToForm('single')" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold hover:bg-blue-600 transition">بدء الإعلان الآن</button>
+                <button onclick="openAdForm('خطة الإعلان الواحد')" class="w-full bg-slate-900 text-white py-5 rounded-[1.5rem] font-bold hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-200 transition-all duration-300">بدء الإعلان الآن</button>
             </div>
 
-            <div class="bg-white p-8 rounded-[2.5rem] shadow-xl gradient-border text-center relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-blue-600 text-white px-6 py-1 rounded-bl-2xl text-xs font-bold">الأكثر كفاءة</div>
-                <div class="bg-blue-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-200">
-                    <i class="fas fa-rocket text-white text-2xl"></i>
+            <div class="plan-card bg-white p-10 rounded-[3rem] shadow-2xl shadow-blue-100 border-2 border-blue-500 text-center relative flex flex-col scale-105">
+                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-8 py-2 rounded-full text-xs font-black shadow-xl">الأكثر كفاءة</div>
+                <div class="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl shadow-lg shadow-blue-200">
+                    <i class="fas fa-rocket"></i>
                 </div>
-                <h3 class="text-2xl font-black mb-2 text-blue-900">الخطة الاحترافية</h3>
-                <p class="text-gray-400 text-sm mb-6">للمتاجر الجادة والطموحة</p>
-                <div class="text-4xl font-black text-blue-600 mb-6">1200 <span class="text-sm">دج</span></div>
-                <ul class="text-right space-y-3 mb-8 text-gray-600">
-                    <li class="font-bold text-blue-900"><i class="fas fa-star text-amber-500 ml-2"></i> إضافة حتى 10 منتجات متنوعة</li>
-                    <li><i class="fas fa-check text-blue-500 ml-2"></i> أولوية الظهور في الصفحة الأولى</li>
-                    <li><i class="fas fa-check text-blue-500 ml-2"></i> تقرير أداء ونقرات حقيقي</li>
-                    <li><i class="fas fa-check text-blue-500 ml-2"></i> تحديث إعلاناتك في أي وقت</li>
+                <h2 class="text-2xl font-black text-slate-800 mb-2">الخطة الاحترافية</h2>
+                <p class="text-slate-400 text-sm mb-6">للمتاجر الجادة والطموحة</p>
+                <div class="text-5xl font-black text-blue-600 mb-8">2,000 <span class="text-lg font-bold text-slate-300">دج</span></div>
+                <ul class="text-right space-y-5 mb-10 text-slate-600 flex-1">
+                    <li class="flex items-center gap-3 font-bold text-slate-800"><i class="fas fa-star text-amber-400"></i> إضافة حتى 10 منتجات متنوعة</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check bg-blue-100 text-blue-600 p-1 rounded-full text-[10px]"></i> أولوية الظهور في الصفحة الأولى</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check bg-blue-100 text-blue-600 p-1 rounded-full text-[10px]"></i> تقرير أداء ونقرات حقيقي</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check bg-blue-100 text-blue-600 p-1 rounded-full text-[10px]"></i> تحديث إعلاناتك في أي وقت</li>
                 </ul>
-                <button onclick="scrollToForm('pro')" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black shadow-lg hover:shadow-blue-300 transition">اشترك واحجز مكانك</button>
+                <button onclick="openAdForm('الخطة الاحترافية')" class="w-full bg-blue-600 text-white py-5 rounded-[1.5rem] font-black hover:bg-blue-700 shadow-xl shadow-blue-200 transition-all duration-300">اشترك واحجز مكانك</button>
             </div>
-        </div>
 
-        <div class="bg-blue-900 rounded-[2.5rem] p-10 text-white mb-16 shadow-2xl">
-            <h3 class="text-2xl font-black mb-8 text-center flex items-center justify-center gap-3">
-                <i class="fas fa-wallet text-blue-300"></i> طرق الدفع المتاحة
-            </h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white/10 p-6 rounded-3xl border border-white/10 hover:bg-white/20 transition">
-                    <i class="fas fa-university text-3xl mb-4 text-blue-300"></i>
-                    <h4 class="font-bold mb-2">BaridiMob</h4>
-                    <p class="text-xs text-blue-100 opacity-80 uppercase tracking-widest">00799999000000000000</p>
-                </div>
-                <div class="bg-white/10 p-6 rounded-3xl border border-white/10 hover:bg-white/20 transition">
-                    <i class="fas fa-envelope-open-text text-3xl mb-4 text-blue-300"></i>
-                    <h4 class="font-bold mb-2">حساب CCP</h4>
-                    <p class="text-xs text-blue-100 opacity-80">الاسم: لقبك واسمك<br>الحساب: 000000 / المفتاح: 00</p>
-                </div>
-                <div class="bg-white/10 p-6 rounded-3xl border border-white/10 hover:bg-white/20 transition">
-                    <i class="fas fa-handshake text-3xl mb-4 text-blue-300"></i>
-                    <h4 class="font-bold mb-2">يد بيد</h4>
-                    <p class="text-xs text-blue-100 opacity-80">متوفر في ولاية [اسم ولايتك]<br>تواصل معنا للتنسيق</p>
-                </div>
-            </div>
-            <p class="text-center mt-8 text-sm text-blue-200 italic">تنبيه: بعد الدفع يرجى إرسال "وصل الدفع" عبر الواتساب لتفعيل الإعلان.</p>
         </div>
+    </section>
 
-        <div id="adFormSection" class="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-gray-100">
-            <h3 class="text-2xl font-black mb-8 flex items-center gap-3">
-                <i class="fas fa-edit text-blue-600"></i> معلومات الإعلان
-            </h3>
-            <form id="adForm" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <input type="text" id="sellerName" placeholder="اسمك أو اسم المتجر" class="bg-gray-50 border p-4 rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition" required>
-                    <input type="tel" id="sellerPhone" placeholder="رقم واتساب الزبائن (05/06/07)" class="bg-gray-50 border p-4 rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition" required>
+    <div id="adModal" class="hidden fixed inset-0 z-[150] bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4 modal-bg" onclick="closeOnOutsideClick(event)">
+        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl relative" onclick="event.stopPropagation()">
+            <button onclick="closeAdForm()" class="absolute top-6 left-6 text-slate-300 hover:text-red-500 transition"><i class="fas fa-times text-xl"></i></button>
+            
+            <h3 id="planTitle" class="text-2xl font-black mb-2 text-slate-900 leading-tight">طلب إعلان</h3>
+            <p class="text-slate-400 text-sm mb-8">يرجى ملء البيانات لنقوم بالاتصال بك</p>
+            
+            <form id="adForm" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-2 mr-2">اسم المتجر / الشخص</label>
+                    <input type="text" id="storeName" placeholder="مثلاً: متجر النور" class="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl outline-none focus:border-blue-500 transition" required>
                 </div>
-                <select id="planType" class="w-full bg-gray-50 border p-4 rounded-2xl outline-none" required>
-                    <option value="single">إعلان واحد (120 دج)</option>
-                    <option value="pro">الخطة الاحترافية (1200 دج)</option>
-                </select>
-                <textarea id="productDetails" placeholder="اكتب وصفاً قصيراً لسلعتك..." class="w-full bg-gray-50 border p-4 rounded-2xl h-32 outline-none focus:ring-2 focus:ring-blue-600 transition" required></textarea>
                 
-                <button type="submit" id="submitBtn" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black text-xl shadow-xl hover:bg-blue-700 transition flex items-center justify-center gap-3">
-                    <i class="fab fa-whatsapp text-2xl"></i>
-                    إرسال الطلب والتواصل للتفعيل
-                </button>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-2 mr-2">رقم الهاتف (الجزائر)</label>
+                    <input type="tel" id="storePhone" pattern="0[567][0-9]{8}" placeholder="05 / 06 / 07" class="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl outline-none focus:border-blue-500 transition" required title="يجب إدخال رقم هاتف جزائري صحيح مكون من 10 أرقام">
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-2 mr-2">تفاصيل إضافية</label>
+                    <textarea id="adNotes" placeholder="ما هي طبيعة السلع التي تريد بيعها؟" class="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl h-28 outline-none focus:border-blue-500 transition resize-none"></textarea>
+                </div>
+                
+                <div class="pt-4">
+                    <button type="submit" id="submitAdBtn" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black shadow-lg shadow-blue-200 hover:bg-blue-700 transition flex items-center justify-center gap-3">
+                        <i class="fab fa-whatsapp text-xl"></i> إرسال الطلب عبر الواتساب
+                    </button>
+                </div>
             </form>
         </div>
     </div>
 
-    <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycb.../exec'; // ضع رابطك هنا
-        const MY_WHATSAPP = '213558592542';
+    <footer class="text-center py-20 bg-white border-t border-slate-100">
+        <a href="index.html" class="inline-flex items-center gap-3 text-slate-900 bg-slate-100 px-8 py-3 rounded-full hover:bg-slate-900 hover:text-white transition-all font-bold">
+            <i class="fas fa-arrow-right"></i> العودة للمتجر الرئيسي
+        </a>
+        <p class="mt-8 text-slate-400 text-sm">&copy; 2026 جميع الحقوق محفوظة لـ DZ Market Pro.</p>
+    </footer>
 
-        function scrollToForm(plan) {
-            document.getElementById('planType').value = plan;
-            document.getElementById('adFormSection').scrollIntoView({ behavior: 'smooth' });
+    <script>
+        // 1. رابط الـ Apps Script (تأكد من استبداله)
+        const SCRIPT_URL = 'ضع_رابط_جوجل_سكريبت_هنا'; 
+        let selectedPlan = '';
+
+        // 2. إدارة الـ Modal
+        function openAdForm(plan) {
+            selectedPlan = plan;
+            document.getElementById('planTitle').innerText = plan;
+            document.getElementById('adModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // منع السكرول عند فتح النافذة
         }
 
+        function closeAdForm() {
+            document.getElementById('adModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            document.getElementById('adForm').reset(); // تنظيف الحقول
+        }
+
+        function closeOnOutsideClick(e) {
+            if (e.target.id === 'adModal') closeAdForm();
+        }
+
+        // 3. معالجة الإرسال (الحل الذكي)
         document.getElementById('adForm').onsubmit = async function(e) {
             e.preventDefault();
-            const btn = document.getElementById('submitBtn');
+            const btn = document.getElementById('submitAdBtn');
+            const originalText = btn.innerHTML;
+            
+            // حالة التحميل
+            btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> جاري تأمين الطلب...`;
             btn.disabled = true;
-            btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> جاري إرسال البيانات...`;
 
-            const data = {
-                name: document.getElementById('sellerName').value,
-                phone: document.getElementById('sellerPhone').value,
-                plan: document.getElementById('planType').value,
-                details: document.getElementById('productDetails').value
+            const adData = {
+                name: document.getElementById('storeName').value,
+                phone: document.getElementById('storePhone').value,
+                city: "إعلان: " + selectedPlan,
+                items: document.getElementById('adNotes').value || "لا توجد تفاصيل إضافية",
+                total: "انتظار تفعيل الإعلان"
             };
 
             try {
-                // إرسال البيانات للجدول
-                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+                // إرسال البيانات (استخدام fetch مع معالجة الوقت)
+                const fetchPromise = fetch(SCRIPT_URL, { 
+                    method: 'POST', 
+                    mode: 'no-cors', 
+                    body: JSON.stringify(adData) 
+                });
+
+                // توجيه الواتساب (رسالة منسقة)
+                const msg = `طلب اشتراك إعلاني جديد 🚀%0A---%0Aالخطة المختارة: ${selectedPlan}%0Aاسم النشاط: ${adData.name}%0Aرقم الهاتف: ${adData.phone}%0Aالوصف: ${adData.items}`;
                 
-                // رسالة الواتساب
-                const planPrice = data.plan === 'pro' ? '1200 دج' : '120 دج';
-                const msg = `طلب إعلان جديد 📢%0A---%0Aالتاجر: ${data.name}%0Aالخطة: ${data.plan} (${planPrice})%0Aالهاتف: ${data.phone}%0Aالتفاصيل: ${data.details}%0A---%0Aأرجو تزويدي بتفاصيل الدفع لتفعيل الإعلان.`;
-                
-                window.open(`https://wa.me/${MY_WHATSAPP}?text=${msg}`, '_blank');
-                alert("تم إرسال طلبك بنجاح! سيتم توجيهك الآن للواتساب لتأكيد الدفع.");
-            } catch (error) {
-                alert("حدث خطأ في الاتصال، يمكنك مراسلتنا مباشرة عبر واتساب.");
+                // ننتظر قليلاً لضمان بدء عملية الـ Fetch ثم نفتح الواتساب
+                setTimeout(() => {
+                    window.open(`https://wa.me/213558592542?text=${msg}`, '_blank');
+                    alert("ممتاز! تم حفظ بياناتك محلياً وستنتقل الآن لتأكيد الطلب مع الإدارة عبر واتساب.");
+                    closeAdForm();
+                }, 1000);
+
+            } catch (err) {
+                console.error("Error:", err);
+                alert("تعذر الحفظ في القاعدة حالياً، لكن يمكنك إرسال الطلب عبر الواتساب مباشرة.");
+                window.open(`https://wa.me/213558592542?text=طلب_إعلان_يدوي_${selectedPlan}`, '_blank');
             } finally {
+                btn.innerHTML = originalText;
                 btn.disabled = false;
-                btn.innerHTML = `<i class="fab fa-whatsapp text-2xl"></i> إرسال الطلب والتواصل للتفعيل`;
             }
         };
     </script>
