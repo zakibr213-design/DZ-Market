@@ -11,41 +11,65 @@
     
     <style>
         body { font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
-        .glass-panel { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
         .cart-sidebar { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(100%); }
         .cart-sidebar.open { transform: translateX(0); }
         .product-card:hover { transform: translateY(-5px); transition: 0.3s; }
+        /* أنيميشن لزر الإعلان لفت الانتباه */
+        .btn-pulse { animation: pulse-blue 2s infinite; }
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <nav class="glass-panel sticky top-0 z-50 shadow-sm px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-2">
+    <nav class="glass-panel sticky top-0 z-50 shadow-sm px-4 md:px-8 py-4 flex justify-between items-center border-b border-gray-100">
+        <div class="flex items-center gap-3">
             <div class="bg-blue-600 text-white p-2 rounded-xl font-bold shadow-lg">DZ</div>
-            <span class="text-2xl font-black text-blue-900">Market<span class="text-blue-600">Pro</span></span>
+            <span class="text-xl md:text-2xl font-black text-blue-900 leading-none">Market<span class="text-blue-600">Pro</span></span>
         </div>
         
-        <div class="flex items-center gap-4">
-            <button onclick="toggleCart()" class="relative p-3 bg-white rounded-2xl shadow-sm border hover:bg-gray-50 transition">
+        <div class="flex items-center gap-2 md:gap-4">
+            <a href="advertise.html" class="hidden sm:flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2.5 rounded-2xl font-bold text-sm hover:bg-blue-600 hover:text-white transition-all btn-pulse">
+                <i class="fas fa-bullhorn"></i>
+                أعلن معنا
+            </a>
+
+            <button onclick="toggleCart()" class="relative p-3 bg-white rounded-2xl shadow-sm border border-gray-100 hover:bg-gray-50 transition">
                 <i class="fas fa-shopping-basket text-blue-600 text-xl"></i>
                 <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">0</span>
             </button>
+            
+            <a href="advertise.html" class="sm:hidden p-3 bg-blue-600 text-white rounded-2xl shadow-lg">
+                <i class="fas fa-plus"></i>
+            </a>
         </div>
     </nav>
 
     <header class="max-w-7xl mx-auto px-6 py-12">
-        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-[2.5rem] p-10 text-white flex flex-col md:flex-row items-center justify-between shadow-2xl">
-            <div class="md:w-1/2 space-y-4 mb-8 md:mb-0">
-                <span class="bg-white/20 px-4 py-1 rounded-full text-sm font-bold">توصيل متوفر لـ 58 ولاية 🇩🇿</span>
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-[2.5rem] p-10 text-white flex flex-col md:flex-row items-center justify-between shadow-2xl relative overflow-hidden">
+            <div class="md:w-1/2 space-y-4 mb-8 md:mb-0 relative z-10">
+                <span class="bg-white/20 px-4 py-1 rounded-full text-sm font-bold border border-white/10">توصيل متوفر لـ 58 ولاية 🇩🇿</span>
                 <h1 class="text-4xl md:text-6xl font-black leading-tight">تسوّق أفضل المنتجات بضمان الجودة</h1>
-                <p class="text-blue-100 opacity-90">اختر منتجاتك المفضلة وأكمل طلبك عبر الواتساب بكل سهولة.</p>
+                <p class="text-blue-100 opacity-90 text-lg">اختر منتجاتك المفضلة وأكمل طلبك عبر الواتساب بكل سهولة.</p>
+                <div class="pt-4 flex gap-3">
+                     <a href="#product-grid" class="bg-white text-blue-600 px-6 py-3 rounded-2xl font-black shadow-lg hover:bg-blue-50 transition">ابدأ التسوق</a>
+                     <a href="advertise.html" class="bg-blue-500/30 backdrop-blur-md text-white border border-white/20 px-6 py-3 rounded-2xl font-bold hover:bg-blue-500 transition">أعلن عن سلعتك</a>
+                </div>
             </div>
-            <div class="text-6xl md:text-9xl opacity-20"><i class="fas fa-shopping-bag"></i></div>
+            <div class="text-6xl md:text-[12rem] opacity-10 absolute -left-10 -bottom-10 rotate-12"><i class="fas fa-shopping-bag"></i></div>
+            <div class="hidden md:block w-72 h-72 bg-white/10 rounded-full absolute -top-20 -right-20 blur-3xl"></div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-6 py-8">
-        <h3 class="text-2xl font-black mb-8 border-r-4 border-blue-600 pr-4">المنتجات المتوفرة</h3>
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-2xl font-black border-r-4 border-blue-600 pr-4">المنتجات المتوفرة</h3>
+            <span class="text-gray-400 text-sm font-bold">عرض الكل</span>
+        </div>
         <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             </div>
     </main>
@@ -69,7 +93,7 @@
     </div>
 
     <div id="checkoutModal" class="hidden fixed inset-0 z-[150] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-lg rounded-[2.5rem] p-8 shadow-2xl animate-in zoom-in duration-300">
+        <div class="bg-white w-full max-w-lg rounded-[2.5rem] p-8 shadow-2xl">
             <h3 class="text-2xl font-black mb-6 flex items-center gap-2">
                 <i class="fas fa-truck text-blue-600"></i> معلومات التوصيل
             </h3>
@@ -103,11 +127,10 @@
     </div>
 
     <script>
-        // الإعدادات الهامة
-        const SCRIPT_URL = 'ضع_رابط_جوجل_سكريبت_الخاص_بك_هنا';
+        // الإعدادات الهامة (تأكد من وضع الرابط الخاص بك)
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycb.../exec'; 
         const WHATSAPP_NUMBER = '213558592542';
 
-        // قاعدة بيانات المنتجات
         const products = [
             { id: 1, name: "سماعات بلوتوث M10", price: 4500, icon: "fa-headphones", color: "blue" },
             { id: 2, name: "ساعة Ultra ذكية", price: 8900, icon: "fa-clock", color: "indigo" },
@@ -117,13 +140,12 @@
 
         let cart = [];
 
-        // عرض المنتجات
         function initProducts() {
             const grid = document.getElementById('product-grid');
             grid.innerHTML = products.map(p => `
-                <div class="bg-white p-5 rounded-[2rem] shadow-sm border border-gray-100 product-card">
-                    <div class="h-48 bg-${p.color}-50 rounded-3xl flex items-center justify-center mb-4 transition group overflow-hidden">
-                        <i class="fas ${p.icon} text-5xl text-${p.color}-200 group-hover:scale-110 duration-500"></i>
+                <div class="bg-white p-5 rounded-[2rem] shadow-sm border border-gray-100 product-card transition-all">
+                    <div class="h-48 bg-gray-50 rounded-3xl flex items-center justify-center mb-4 transition group overflow-hidden">
+                        <i class="fas ${p.icon} text-5xl text-blue-200 group-hover:scale-110 duration-500"></i>
                     </div>
                     <h4 class="font-bold text-lg text-gray-800 mb-2">${p.name}</h4>
                     <p class="text-blue-600 font-black text-2xl mb-4">${p.price.toLocaleString()} د.ج</p>
@@ -134,7 +156,6 @@
             `).join('');
         }
 
-        // إدارة السلة
         function addToCart(id) {
             const product = products.find(p => p.id === id);
             cart.push(product);
@@ -171,7 +192,6 @@
             else sidebar.classList.toggle('open');
         }
 
-        // المعاملات المالية
         function openCheckout() {
             if (cart.length === 0) return alert("السلة فارغة!");
             document.getElementById('checkoutModal').classList.remove('hidden');
@@ -192,7 +212,6 @@
             document.getElementById('summary-total').innerText = (subtotal + shipping).toLocaleString() + " دج";
         }
 
-        // إرسال الطلب وحفظ البيانات
         document.getElementById('orderForm').onsubmit = async function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
@@ -208,31 +227,30 @@
             };
 
             try {
-                // إرسال البيانات لجوجل شيت
-                await fetch(SCRIPT_URL, {
+                fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
                     body: JSON.stringify(orderData)
                 });
 
-                // فتح واتساب
                 const msg = `طلبية جديدة 🛒%0A---%0Aالزبون: ${orderData.name}%0Aالهاتف: ${orderData.phone}%0Aالولاية: ${orderData.city}%0Aالسلع: ${orderData.items}%0Aالإجمالي: ${orderData.total}%0A---%0Aأرجو تأكيد الطلب.`;
-                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
                 
-                alert("تم تسجيل طلبك! سيفتح واتساب الآن للتأكيد.");
-                cart = [];
-                updateCart();
-                closeCheckout();
+                setTimeout(() => {
+                    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+                    alert("تم تسجيل طلبك! سيفتح واتساب الآن للتأكيد.");
+                    cart = [];
+                    updateCart();
+                    closeCheckout();
+                }, 1000);
+                
             } catch (err) {
-                alert("حدث خطأ، سيتم توجيهك للواتساب مباشرة.");
-                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=طلب_يدوي_فشل_الحفظ`, '_blank');
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=طلب_يدوي`, '_blank');
             } finally {
                 btn.innerHTML = `<i class="fab fa-whatsapp"></i> تأكيد الطلب`;
                 btn.disabled = false;
             }
         };
 
-        // تشغيل البداية
         initProducts();
     </script>
 </body>
