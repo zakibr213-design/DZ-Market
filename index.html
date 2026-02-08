@@ -1,242 +1,308 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Aures Click Elite</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aures Click Elite</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-<script>
-tailwind.config = {
-  darkMode: 'class',
-  theme: { extend: { colors:{ ai:'#4f46e5', vendor:'#10b981', danger:'#ef4444' } } }
-}
-</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
 
-<style>
-body{font-family:Cairo,sans-serif}
-.view{display:none}
-.view.active{display:block}
-.card-hover:hover{transform:translateY(-8px)}
-</style>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { ai: '#4f46e5', vendor: '#10b981', danger: '#ef4444' }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root { --bg: theme('colors.slate.50'); --text: theme('colors.slate.900'); }
+    .dark { --bg: theme('colors.slate.950'); --text: theme('colors.slate.100'); }
+    body {
+      font-family: 'Cairo', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background-color 0.4s, color 0.4s;
+    }
+    .view { display: none; }
+    .view.active { display: block; }
+    .card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.12); }
+    .img-container { aspect-ratio: 4/5; overflow: hidden; }
+  </style>
 </head>
+<body class="min-h-screen">
 
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+<!-- ── Navigation ──────────────────────────────────────── -->
+<nav class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3.5">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <h1 onclick="app.show('home')" class="text-2xl font-black text-ai cursor-pointer select-none">AURES CLICK</h1>
 
-<!-- NAV -->
-<nav class="sticky top-0 bg-white dark:bg-slate-900 shadow px-4 py-3 z-50">
-<div class="max-w-7xl mx-auto flex justify-between items-center">
-<h1 onclick="app.show('home')" class="font-black text-xl cursor-pointer text-ai">AURES CLICK</h1>
+    <div class="flex items-center gap-3">
+      <button onclick="app.toggleTheme()" class="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+        🌓
+      </button>
+      <button onclick="app.toggleCart()" class="relative p-2.5 rounded-lg bg-ai/10 text-ai hover:bg-ai/20 transition">
+        🛒
+        <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold min-w-[18px] h-5 px-1.5 rounded-full flex items-center justify-center">0</span>
+      </button>
+      <button onclick="app.toggleMobileMenu()" class="lg:hidden p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800">
+        ☰
+      </button>
+    </div>
+  </div>
 
-<div class="flex gap-3">
-<button onclick="app.toggleTheme()" class="px-3 py-2 bg-slate-200 dark:bg-slate-800 rounded">🌓</button>
-<button onclick="app.toggleCart()" class="px-3 py-2 bg-ai text-white rounded">🛒 <span id="cart-count">0</span></button>
-<button onclick="app.toggleMobile()" class="lg:hidden px-3 py-2 bg-slate-200 dark:bg-slate-800 rounded">☰</button>
-</div>
-</div>
-
-<div id="mobile-menu" class="hidden mt-4 flex flex-col gap-3 text-sm font-bold">
-<button onclick="app.show('home')">الرئيسية</button>
-<button onclick="app.show('marketplace')">المتجر</button>
-</div>
+  <div id="mobile-menu" class="hidden lg:hidden mt-3 px-4 py-3 bg-white dark:bg-slate-900 border-t dark:border-slate-800">
+    <div class="flex flex-col gap-4 font-medium">
+      <button onclick="app.show('home'); app.toggleMobileMenu()">الرئيسية</button>
+      <button onclick="app.show('marketplace'); app.toggleMobileMenu()">المتجر</button>
+    </div>
+  </div>
 </nav>
 
-<!-- HOME -->
-<section id="view-home" class="view active max-w-7xl mx-auto p-6">
+<!-- ── Main Content ────────────────────────────────────── -->
+<main class="max-w-7xl mx-auto p-5 md:p-6">
 
-<input id="search" placeholder="بحث..." class="w-full p-3 rounded bg-white dark:bg-slate-800 mb-6"/>
+  <section id="view-home" class="view active">
+    <input id="search-input" type="search"
+           placeholder="ابحث عن منتج..."
+           class="w-full p-4 mb-6 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:border-ai focus:ring-2 focus:ring-ai/30 outline-none transition"/>
 
-<div class="flex gap-2 mb-6">
-<button data-cat="all" class="cat bg-ai text-white px-4 py-2 rounded">الكل</button>
-<button data-cat="tech" class="cat bg-slate-200 dark:bg-slate-800 px-4 py-2 rounded">تقنية</button>
-<button data-cat="fashion" class="cat bg-slate-200 dark:bg-slate-800 px-4 py-2 rounded">موضة</button>
-</div>
+    <div class="flex flex-wrap gap-2.5 mb-8">
+      <button data-cat="all"      class="cat-btn px-5 py-2.5 rounded-lg font-medium bg-ai text-white">الكل</button>
+      <button data-cat="tech"     class="cat-btn px-5 py-2.5 rounded-lg font-medium bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">تقنية</button>
+      <button data-cat="fashion"  class="cat-btn px-5 py-2.5 rounded-lg font-medium bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition">موضة</button>
+    </div>
 
-<div id="products-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
-</section>
+    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+  </section>
 
-<!-- MARKET -->
-<section id="view-marketplace" class="view max-w-7xl mx-auto p-6">
-<h2 class="text-3xl font-black mb-6">المتجر</h2>
-<div id="marketplace-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
-</section>
+  <section id="view-marketplace" class="view">
+    <h2 class="text-3xl md:text-4xl font-black mb-8 text-center">المتجر الكامل</h2>
+    <div id="marketplace-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+  </section>
 
-<!-- CART -->
-<div id="cart" class="fixed right-0 top-0 h-full w-full max-w-md bg-white dark:bg-slate-900 shadow transform translate-x-full transition p-6 overflow-y-auto">
-<h3 class="font-black text-xl mb-4">السلة</h3>
-<div id="cart-items" class="space-y-4"></div>
-<div class="mt-6 font-black">الإجمالي: <span id="cart-total">0</span> دج</div>
-<button onclick="app.checkout()" class="mt-4 w-full bg-vendor text-white py-3 rounded">تأكيد</button>
+</main>
+
+<!-- ── Cart Drawer ─────────────────────────────────────── -->
+<div id="cart-drawer"
+     class="fixed inset-y-0 right-0 w-full max-w-sm bg-white dark:bg-slate-900 shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
+
+  <div class="p-5 md:p-6">
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="text-xl font-bold">سلة التسوق</h3>
+      <button onclick="app.toggleCart()" class="text-2xl leading-none hover:text-red-500 transition">×</button>
+    </div>
+
+    <div id="cart-items" class="space-y-5 min-h-[200px]"></div>
+
+    <div class="mt-8 pt-6 border-t dark:border-slate-700">
+      <div class="flex justify-between text-lg font-bold mb-5">
+        <span>المجموع</span>
+        <span id="cart-total">0 دج</span>
+      </div>
+      <button onclick="app.checkout()" class="w-full bg-vendor text-white py-4 rounded-xl font-bold hover:opacity-90 transition">
+        تأكيد الطلب
+      </button>
+    </div>
+  </div>
 </div>
 
 <script>
-const FALLBACK_IMG="https://via.placeholder.com/600x800?text=No+Image";
+// ────────────────────────────────────────────────
+class AuresStore {
+  constructor() {
+    this.state = {
+      products: [
+        {id:1, name:"Sony α7 IV",      price:340_000, cat:"tech",    stock:3,  img:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800"},
+        {id:2, name:"جاكيت جلدي",      price: 18_000, cat:"fashion", stock:10, img:"https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800"},
+        {id:3, name:"Razer Blade 16",   price:290_000, cat:"tech",    stock:2,  img:"https://images.unsplash.com/photo-1611078489935-0cb4c2497a00?w=800"},
+      ],
+      cart: JSON.parse(localStorage.getItem("aures_cart") || "[]"),
+      activeCat: "all",
+      search: ""
+    };
 
-class StoreApp {
+    this.elements = {
+      gridHome: document.getElementById("products-grid"),
+      gridMarket: document.getElementById("marketplace-grid"),
+      cartItems: document.getElementById("cart-items"),
+      cartTotal: document.getElementById("cart-total"),
+      cartCount: document.getElementById("cart-count"),
+      cartDrawer: document.getElementById("cart-drawer"),
+      searchInput: document.getElementById("search-input")
+    };
+  }
 
-state={
-products:[
-{id:1,name:"Sony A7 IV",price:340000,cat:"tech",stock:3,img:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800"},
-{id:2,name:"جاكيت",price:18000,cat:"fashion",stock:10,img:"https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800"},
-{id:3,name:"Razer Blade",price:290000,cat:"tech",stock:2,img:"https://images.unsplash.com/photo-1611078489935-0cb4c2497a00?w=800"},
-],
-cart:JSON.parse(localStorage.getItem("cart")||"[]"),
-cat:"all",
-q:""
+  init() {
+    this.applyTheme();
+    this.bindEvents();
+    this.renderAll();
+    this.updateCartUI();
+  }
+
+  bindEvents() {
+    // بحث
+    let debounceTimer;
+    this.elements.searchInput.oninput = e => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        this.state.search = e.target.value.trim().toLowerCase();
+        this.renderAll();
+      }, 280);
+    };
+
+    // فئات
+    document.querySelectorAll(".cat-btn").forEach(btn => {
+      btn.onclick = () => {
+        this.state.activeCat = btn.dataset.cat;
+        document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("bg-ai","text-white"));
+        btn.classList.add("bg-ai","text-white");
+        this.renderAll();
+      };
+    });
+  }
+
+  show(view) {
+    document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+    document.getElementById(`view-${view}`)?.classList.add("active");
+  }
+
+  toggleMobileMenu() {
+    document.getElementById("mobile-menu").classList.toggle("hidden");
+  }
+
+  toggleTheme() {
+    document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
+  }
+
+  applyTheme() {
+    if (localStorage.getItem("theme") === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  }
+
+  sanitize(str) {
+    return DOMPurify.sanitize(str, {ALLOWED_TAGS: []});
+  }
+
+  renderAll() {
+    const filtered = this.state.products.filter(p =>
+      (this.state.activeCat === "all" || p.cat === this.state.activeCat) &&
+      (!this.state.search || p.name.toLowerCase().includes(this.state.search))
+    );
+
+    const html = filtered.map(p => `
+      <div class="card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm">
+        <div class="img-container bg-slate-100 dark:bg-slate-700">
+          <img loading="lazy" class="w-full h-full object-cover" 
+               src="${this.sanitize(p.img)}" 
+               alt="${this.sanitize(p.name)}"
+               onerror="this.src='https://via.placeholder.com/400x500?text=×'">
+        </div>
+        <div class="p-4">
+          <h4 class="font-bold text-lg mb-1.5 line-clamp-2">${this.sanitize(p.name)}</h4>
+          <div class="text-ai font-black text-xl">${p.price.toLocaleString()} دج</div>
+          <div class="text-xs opacity-70 mt-1">المخزون: ${p.stock}</div>
+          <button ${p.stock < 1 ? 'disabled' : ''} 
+                  onclick="app.addToCart(${p.id})"
+                  class="mt-4 w-full py-2.5 rounded-lg font-medium transition
+                         ${p.stock < 1 ? 'bg-slate-400 cursor-not-allowed' : 'bg-ai text-white hover:bg-indigo-700'}">
+            ${p.stock < 1 ? 'نفد' : 'أضف للسلة'}
+          </button>
+        </div>
+      </div>
+    `).join("");
+
+    this.elements.gridHome.innerHTML = html;
+    this.elements.gridMarket.innerHTML = html;
+  }
+
+  addToCart(id) {
+    const product = this.state.products.find(p => p.id === id);
+    if (!product || product.stock < 1) return;
+
+    let item = this.state.cart.find(i => i.id === id);
+    if (item) {
+      if (item.qty >= product.stock) return alert("الكمية المتاحة غير كافية");
+      item.qty++;
+    } else {
+      this.state.cart.push({ ...product, qty: 1 });
+    }
+
+    product.stock--;
+    this.updateCartUI();
+    this.renderAll(); // تحديث عرض المخزون
+  }
+
+  removeFromCart(id) {
+    const item = this.state.cart.find(i => i.id === id);
+    if (!item) return;
+
+    const product = this.state.products.find(p => p.id === id);
+    if (product) product.stock += item.qty;
+
+    this.state.cart = this.state.cart.filter(i => i.id !== id);
+    this.updateCartUI();
+    this.renderAll();
+  }
+
+  updateCartUI() {
+    localStorage.setItem("aures_cart", JSON.stringify(this.state.cart));
+
+    const count = this.state.cart.reduce((sum, i) => sum + i.qty, 0);
+    this.elements.cartCount.textContent = count;
+
+    if (this.state.cart.length === 0) {
+      this.elements.cartItems.innerHTML = '<p class="text-center py-12 opacity-60">السلة فارغة</p>';
+      this.elements.cartTotal.textContent = "0";
+      return;
+    }
+
+    this.elements.cartItems.innerHTML = this.state.cart.map(item => `
+      <div class="flex gap-4 bg-slate-50 dark:bg-slate-800 p-4 rounded-xl">
+        <div class="flex-1">
+          <div class="font-medium">${this.sanitize(item.name)}</div>
+          <div class="text-sm opacity-80">${item.price.toLocaleString()} دج × ${item.qty}</div>
+        </div>
+        <button onclick="app.removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 text-xl leading-none">×</button>
+      </div>
+    `).join("");
+
+    const total = this.state.cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+    this.elements.cartTotal.textContent = total.toLocaleString();
+  }
+
+  toggleCart() {
+    this.elements.cartDrawer.classList.toggle("translate-x-full");
+    if (!this.elements.cartDrawer.classList.contains("translate-x-full")) {
+      this.updateCartUI();
+    }
+  }
+
+  checkout() {
+    if (!this.state.cart.length) return alert("السلة فارغة");
+
+    alert("تم إتمام الطلب بنجاح (محاكاة)");
+    this.state.cart = [];
+    this.updateCartUI();
+    this.toggleCart();
+    this.renderAll();
+  }
 }
 
-init(){
-this.bind()
-this.render()
-this.updateCart()
-this.applyTheme(localStorage.getItem("theme")==="dark")
-}
-
-bind(){
-
-// categories
-document.querySelectorAll(".cat").forEach(b=>{
-b.onclick=()=>{
-this.state.cat=b.dataset.cat
-this.render()
-}
-})
-
-// debounce search
-let t
-search.oninput=e=>{
-clearTimeout(t)
-t=setTimeout(()=>{
-this.state.q=e.target.value.toLowerCase()
-this.render()
-},300)
-}
-
-}
-
-show(v){
-document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"))
-document.getElementById("view-"+v).classList.add("active")
-}
-
-toggleMobile(){
-mobile-menu.classList.toggle("hidden")
-}
-
-toggleTheme(){
-const dark=!document.documentElement.classList.contains("dark")
-this.applyTheme(dark)
-localStorage.setItem("theme",dark?"dark":"light")
-}
-
-applyTheme(dark){
-document.documentElement.classList.toggle("dark",dark)
-}
-
-sanitize(x){return DOMPurify.sanitize(x)}
-
-imgTag(src){
-return `<img loading="lazy" onerror="this.src='${FALLBACK_IMG}'"
-class="w-full h-64 object-cover"
-src="${this.sanitize(src)}">`
-}
-
-render(){
-
-const list=this.state.products.filter(p=>{
-return (this.state.cat==="all"||p.cat===this.state.cat)
-&& p.name.toLowerCase().includes(this.state.q)
-})
-
-const html=list.map(p=>{
-
-const disabled=p.stock===0
-
-return `
-<div class="bg-white dark:bg-slate-800 rounded shadow card-hover">
-${this.imgTag(p.img)}
-<div class="p-4">
-<h4 class="font-bold">${this.sanitize(p.name)}</h4>
-<p class="text-ai font-black">${p.price.toLocaleString()} دج</p>
-<p class="text-xs opacity-60">المخزون: ${p.stock}</p>
-<button ${disabled?"disabled":""}
-onclick="app.add(${p.id})"
-class="mt-3 w-full py-2 rounded ${disabled?"bg-slate-400":"bg-ai text-white"}">
-${disabled?"نفذ":"أضف"}
-</button>
-</div>
-</div>`
-}).join("")
-
-products-grid.innerHTML=html
-marketplace-grid.innerHTML=html
-}
-
-add(id){
-const p=this.state.products.find(x=>x.id===id)
-if(!p||p.stock<=0) return
-
-const c=this.state.cart.find(x=>x.id===id)
-if(c){ 
-if(c.qty>=p.stock) return alert("تجاوزت المخزون")
-c.qty++
-}else{
-this.state.cart.push({...p,qty:1})
-}
-
-this.updateCart()
-}
-
-remove(id){
-this.state.cart=this.state.cart.filter(x=>x.id!==id)
-this.updateCart()
-}
-
-updateCart(){
-localStorage.setItem("cart",JSON.stringify(this.state.cart))
-
-cart-count.innerText=this.state.cart.reduce((s,i)=>s+i.qty,0)
-
-cart-items.innerHTML=this.state.cart.map(i=>`
-<div class="flex justify-between bg-slate-100 dark:bg-slate-800 p-3 rounded">
-<div>
-<div class="font-bold">${this.sanitize(i.name)}</div>
-<div>${i.price.toLocaleString()} دج × ${i.qty}</div>
-</div>
-<button onclick="app.remove(${i.id})" class="text-danger">×</button>
-</div>`).join("")
-
-const total=this.state.cart.reduce((s,i)=>s+i.price*i.qty,0)
-cart-total.innerText=total.toLocaleString()
-}
-
-toggleCart(){
-cart.classList.toggle("translate-x-full")
-}
-
-checkout(){
-if(!this.state.cart.length) return alert("السلة فارغة")
-
-// خصم المخزون
-this.state.cart.forEach(ci=>{
-const p=this.state.products.find(x=>x.id===ci.id)
-p.stock-=ci.qty
-})
-
-this.state.cart=[]
-this.updateCart()
-this.render()
-alert("تم الطلب")
-}
-
-}
-
-const app=new StoreApp()
-app.init()
+const app = new AuresStore();
+app.init();
+window.app = app;
 </script>
-
 </body>
 </html>
