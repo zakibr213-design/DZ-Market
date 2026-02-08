@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aures Click Elite: أكبر سوق تجار في الجزائر. تسوق بأمان وابدأ مشروعك التجاري.">
+    <meta name="keywords" content="تجارة إلكترونية, متجر جزائري, تسوق عبر الإنترنت, بيع منتجات">
+    <meta property="og:title" content="Aures Click Elite | المنصة المتكاملة">
+    <meta property="og:description" content="لا تكتفِ بالمشاهدة، كن التاجر القادم.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630?text=Aures+Click+Elite">
+    <meta property="og:url" content="https://auresclick.com"> <!-- استبدل بالرابط الحقيقي -->
     <title>Aures Click Elite | المنصة المتكاملة</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    
+
+    <!-- أضف DOMPurify للحماية من XSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.3/purify.min.js"></script>
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -18,7 +27,7 @@
             } }
         }
     </script>
-    
+
     <style>
         body { font-family: 'Cairo', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
         .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
@@ -29,6 +38,9 @@
         .premium-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.15); }
         .cat-chip { cursor: pointer; transition: all 0.3s; }
         .cat-chip.active { background: #4f46e5; color: white; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3); }
+        .loading { opacity: 0.5; pointer-events: none; }
+        .spinner { border: 4px solid rgba(0,0,0,0.1); border-top-color: #4f46e5; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-[#F8FAFC] dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-500">
@@ -42,7 +54,7 @@
                 <span class="bg-ai text-white w-10 h-10 flex items-center justify-center rounded-xl rotate-3 group-hover:rotate-0 transition-transform shadow-xl">A</span>
                 <span class="hidden sm:inline">AURES CLICK <span class="text-[10px] font-light opacity-50 uppercase tracking-widest">Elite Edition</span></span>
             </h1>
-            <div class="hidden lg:flex items-center gap-8 text-sm font-bold opacity-70">
+            <div class="hidden lg:flex items-center gap-8 text-sm font-bold opacity-70" id="desktop-menu">
                 <button onclick="showView('home')" class="hover:text-ai transition">الرئيسية</button>
                 <button onclick="showView('marketplace')" class="hover:text-ai transition">المتجر العام</button>
                 <button onclick="showView('pricing')" class="hover:text-ai transition font-black text-vendor">ابدأ مشروعك</button>
@@ -55,15 +67,22 @@
                 <span>🛍️</span>
                 <span id="cart-count" class="absolute -top-1 -right-1 bg-danger text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold border-2 border-white dark:border-slate-950">0</span>
             </div>
-            <button onclick="showView('admin')" class="hidden sm:block bg-slate-900 dark:bg-white dark:text-slate-900 text-white px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest">إدارة المنصة</button>
+            <button onclick="loginAdmin()" class="hidden sm:block bg-slate-900 dark:bg-white dark:text-slate-900 text-white px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest">إدارة المنصة</button>
+            <button id="hamburger" class="lg:hidden p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:scale-110 transition">☰</button>
         </div>
+    </div>
+    <div id="mobile-menu" class="hidden lg:hidden flex flex-col gap-4 px-6 py-4 bg-white dark:bg-slate-900 border-t dark:border-slate-800">
+        <button onclick="showView('home')" class="hover:text-ai transition">الرئيسية</button>
+        <button onclick="showView('marketplace')" class="hover:text-ai transition">المتجر العام</button>
+        <button onclick="showView('pricing')" class="hover:text-ai transition font-black text-vendor">ابدأ مشروعك</button>
+        <button onclick="loginAdmin()" class="bg-slate-900 dark:bg-white dark:text-slate-900 text-white px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest">إدارة المنصة</button>
     </div>
 </nav>
 
 <main id="view-home" class="view-content active animate__animated animate__fadeIn">
     <header class="max-w-screen-2xl mx-auto p-6">
         <div class="relative rounded-[4xl] overflow-hidden h-[550px] flex items-center px-12">
-            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2000" class="absolute inset-0 w-full h-full object-cover brightness-[0.25]">
+            <img src="https://via.placeholder.com/2000x550?text=Hero+Image" class="absolute inset-0 w-full h-full object-cover brightness-[0.25]" alt="Hero background">
             <div class="relative z-10 max-w-3xl">
                 <span class="bg-ai/20 text-ai px-6 py-2 rounded-full text-xs font-black border border-ai/30 mb-6 inline-block">أكبر سوق تجار في الجزائر</span>
                 <h2 class="text-6xl md:text-8xl font-[900] text-white leading-[1.1] mb-8">لا تكتفِ بالمشاهدة، <span class="text-ai">كن التاجر القادم.</span></h2>
@@ -87,7 +106,10 @@
                 <button onclick="filterProducts('fashion')" class="cat-chip px-8 py-3 rounded-2xl text-xs font-black">موضة</button>
             </div>
         </div>
-        <div id="main-product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10"></div>
+        <input type="text" id="search-input" placeholder="ابحث عن منتج..." class="w-full mb-8 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border-none ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-ai outline-none" oninput="searchProducts(this.value)">
+        <div id="main-product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 relative min-h-[300px]">
+            <div id="product-loading" class="absolute inset-0 flex items-center justify-center hidden"><div class="spinner"></div></div>
+        </div>
     </section>
 </main>
 
@@ -95,7 +117,7 @@
     <div class="max-w-5xl mx-auto px-6 text-center">
         <h2 class="text-5xl font-black mb-6">ابدأ رحلتك التجارية بصدق</h2>
         <p class="text-slate-500 text-lg mb-20 max-w-2xl mx-auto">اختر الخطة التي تناسب طموحك. نحن لا نبيع أوهاماً، بل نوفر لك أدوات حقيقية للنمو.</p>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="bg-slate-50 dark:bg-slate-900 p-10 rounded-5xl border-2 border-transparent hover:border-ai/20 transition-all flex flex-col">
                 <h4 class="text-xl font-bold mb-4">خطة الثقة</h4>
@@ -153,30 +175,31 @@
             <div class="p-8 bg-amber-50 dark:bg-amber-900/10 rounded-4xl border border-amber-100 dark:border-amber-900/30">
                 <h4 class="font-black text-amber-700 dark:text-amber-500 mb-4 flex items-center gap-2">🛡️ التحقق القانوني (إلزامي)</h4>
                 <div class="relative group cursor-pointer border-2 border-dashed border-amber-300 dark:border-amber-900/50 p-10 rounded-3xl text-center hover:bg-amber-100/50 transition">
-                    <input required type="file" id="reg-id" class="absolute inset-0 opacity-0 cursor-pointer">
+                    <input required type="file" id="reg-id" class="absolute inset-0 opacity-0 cursor-pointer" onchange="validateFile(this)">
                     <div class="text-amber-600">
                         <span class="text-4xl block mb-2">📸</span>
                         <p class="text-sm font-bold">ارفع صورة بطاقة الهوية أو السجل التجاري</p>
                         <p class="text-[10px] opacity-60 mt-1">يتم مراجعة الوثيقة يدوياً من قبل الإدارة</p>
                     </div>
                 </div>
+                <p id="file-validation" class="text-danger text-xs mt-2 hidden">الملف غير صالح (يجب أن يكون صورة أو PDF)</p>
             </div>
             <button type="submit" class="w-full bg-ai text-white py-6 rounded-4xl font-black text-xl shadow-2xl shadow-ai/30 hover:scale-[1.02] transition">إرسال الطلب للمراجعة 🚀</button>
         </form>
     </div>
 </section>
 
-<section id="view-admin" class="view-content animate__animated animate__fadeIn p-12">
+<section id="view-admin" class="view-content animate__animated animate__fadeIn p-12 hidden">
     <div class="max-w-screen-2xl mx-auto space-y-12">
         <div class="flex justify-between items-center">
             <h2 class="text-4xl font-black">مركز التحكم الخارق ⚡</h2>
             <div class="bg-vendor/10 text-vendor px-6 py-3 rounded-2xl font-black border border-vendor/20">منصة آمنة 100%</div>
         </div>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="bg-white dark:bg-slate-900 p-10 rounded-5xl shadow-sm border dark:border-slate-800">
                 <p class="text-xs font-black opacity-40 uppercase">طلبات الانتظار</p>
-                <h4 id="admin-pending-count" class="text-5xl font-black mt-4 text-amber-500">2</h4>
+                <h4 id="admin-pending-count" class="text-5xl font-black mt-4 text-amber-500">0</h4>
             </div>
             <div class="bg-white dark:bg-slate-900 p-10 rounded-5xl shadow-sm border dark:border-slate-800">
                 <p class="text-xs font-black opacity-40 uppercase">التجار النشطون</p>
@@ -190,134 +213,98 @@
 
         <div class="bg-white dark:bg-slate-900 rounded-[3rem] p-12 border dark:border-slate-800">
             <h3 class="text-2xl font-black mb-10 border-r-4 border-ai pr-4">مراجعة طلبات التوثيق</h3>
-            <div id="admin-pending-list" class="space-y-6">
-                </div>
+            <div id="admin-pending-list" class="space-y-6"></div>
+        </div>
+    </div>
+</section>
+
+<!-- إضافة قسم تفاصيل المنتج -->
+<section id="view-product-detail" class="view-content animate__animated animate__fadeIn py-20 px-6">
+    <div class="max-w-3xl mx-auto bg-white dark:bg-slate-900 rounded-[3.5rem] shadow-3xl p-12">
+        <h3 id="detail-name" class="text-3xl font-black mb-4"></h3>
+        <img id="detail-img" src="" class="w-full rounded-3xl mb-6" alt="Product image">
+        <p id="detail-desc" class="text-slate-500 mb-6"></p>
+        <div class="flex justify-between items-center">
+            <span id="detail-price" class="text-3xl font-black text-ai"></span>
+            <button onclick="addToCartFromDetail()" class="bg-ai text-white px-8 py-4 rounded-2xl font-black">أضف إلى السلة</button>
+        </div>
+    </div>
+</section>
+
+<!-- إضافة قسم السلة -->
+<section id="view-cart" class="view-content animate__animated animate__fadeIn py-20 px-6 hidden">
+    <div class="max-w-3xl mx-auto bg-white dark:bg-slate-900 rounded-[3.5rem] shadow-3xl p-12">
+        <h3 class="text-3xl font-black mb-6">سلة التسوق</h3>
+        <div id="cart-items" class="space-y-4 mb-8"></div>
+        <div class="flex justify-between items-center border-t pt-6">
+            <span class="text-xl font-bold">الإجمالي: <span id="cart-total">0 DA</span></span>
+            <button onclick="checkout()" class="bg-vendor text-white px-8 py-4 rounded-2xl font-black">إكمال الشراء</button>
         </div>
     </div>
 </section>
 
 <script>
 /* -------------------------------------------------------------------------- */
-/* GLOBAL STATE (THE BRAIN)                                                  */
+/* GLOBAL STATE (THE BRAIN) - استخدام localStorage للحفظ الدائم             */
 /* -------------------------------------------------------------------------- */
 let state = {
     products: [
-        { id: 1, name: "Sony Alpha a7 IV Camera", price: 345000, cat: "tech", vendor: "Sony Algeria", img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800", stock: 2 },
-        { id: 2, name: "Premium Leather Jacket", price: 18500, cat: "fashion", vendor: "StyleDz", img: "https://images.unsplash.com/photo-1551028711-0305ed284039?w=800", stock: 15 },
-        { id: 3, name: "Razer Blade 15 Gaming", price: 298000, cat: "tech", vendor: "Elite Gear", img: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=800", stock: 5 }
+        { id: 1, name: "Sony Alpha a7 IV Camera", price: 345000, cat: "tech", vendor: "Sony Algeria", img: "https://via.placeholder.com/800?text=Camera", stock: 2, desc: "كاميرا احترافية عالية الجودة." },
+        { id: 2, name: "Premium Leather Jacket", price: 18500, cat: "fashion", vendor: "StyleDz", img: "https://via.placeholder.com/800?text=Jacket", stock: 15, desc: "جاكيت جلدي فاخر." },
+        { id: 3, name: "Razer Blade 15 Gaming", price: 298000, cat: "tech", vendor: "Elite Gear", img: "https://via.placeholder.com/800?text=Laptop", stock: 5, desc: "لابتوب ألعاب قوي." }
     ],
-    pendingVendors: [
-        { id: 101, store: "أحمد تيك", phone: "0555667788", plan: "Pro" },
-        { id: 102, store: "بوتيك الأناقة", phone: "0666223344", plan: "Free" }
-    ],
+    pendingVendors: [],
     cart: [],
-    currentView: 'home'
+    currentView: 'home',
+    currentProduct: null,
+    adminLoggedIn: false,
+    adminPassword: 'admin123' // كلمة مرور بسيطة (غير آمنة في الإنتاج)
 };
+
+function loadState() {
+    const saved = localStorage.getItem('auresState');
+    if (saved) {
+        state = { ...state, ...JSON.parse(saved) };
+    }
+}
+
+function saveState() {
+    localStorage.setItem('auresState', JSON.stringify(state));
+}
 
 /* -------------------------------------------------------------------------- */
 /* CORE FUNCTIONS                                                            */
 /* -------------------------------------------------------------------------- */
 
 function init() {
+    loadState();
     renderProducts();
     renderAdminPending();
+    updateCartCount();
+    document.getElementById('hamburger').addEventListener('click', toggleMobileMenu);
+}
+
+function toggleMobileMenu() {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
 }
 
 function showView(viewName) {
     document.querySelectorAll('.view-content').forEach(v => v.classList.remove('active'));
-    document.getElementById(`view-${viewName}`).classList.add('active');
+    const view = document.getElementById(`view-${viewName}`);
+    if (view) view.classList.add('active');
     window.scrollTo({top: 0, behavior: 'smooth'});
+    state.currentView = viewName;
+    saveState();
+    if (viewName === 'cart') renderCart();
 }
 
-function renderProducts(filter = 'all') {
+function sanitizeInput(input) {
+    return DOMPurify.sanitize(input);
+}
+
+function renderProducts(filter = 'all', search = '') {
     const grid = document.getElementById("main-product-grid");
-    const filtered = filter === 'all' ? state.products : state.products.filter(p => p.cat === filter);
-    
-    grid.innerHTML = filtered.map(p => `
-        <div class="premium-card bg-white dark:bg-slate-900 p-6 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col group">
-            <div class="relative overflow-hidden rounded-[2.5rem] aspect-square mb-6">
-                <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <button onclick="addToCart(${p.id})" class="bg-white text-black px-8 py-3 rounded-2xl font-black">أضف للسلة +</button>
-                </div>
-                <div class="absolute top-4 right-4 bg-white/90 dark:bg-slate-800/90 px-4 py-2 rounded-full text-[10px] font-black text-ai shadow-lg uppercase tracking-widest italic">
-                    👑 ${p.vendor}
-                </div>
-            </div>
-            <h4 class="font-bold text-lg mb-2">${p.name}</h4>
-            <div class="flex justify-between items-center mt-auto">
-                <span class="text-2xl font-black text-ai">${p.price.toLocaleString()} <span class="text-xs font-light">DA</span></span>
-                <span class="text-[10px] px-3 py-1 bg-vendor/10 text-vendor rounded-full font-bold">تم التحقق</span>
-            </div>
-        </div>
-    `).join("");
-}
+    grid.classList.add('loading');
+    document.getElementById('product-loading').classList.remove('hidden');
 
-function filterProducts(cat) {
-    document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
-    event.target.classList.add('active');
-    renderProducts(cat);
-}
-
-function renderAdminPending() {
-    const list = document.getElementById("admin-pending-list");
-    document.getElementById("admin-pending-count").innerText = state.pendingVendors.length;
-    
-    list.innerHTML = state.pendingVendors.map(v => `
-        <div class="flex flex-col md:flex-row items-center justify-between p-8 bg-slate-50 dark:bg-slate-800/50 rounded-4xl border dark:border-slate-700 animate__animated animate__fadeInUp">
-            <div class="flex items-center gap-6 mb-4 md:mb-0">
-                <div class="w-16 h-16 bg-white dark:bg-slate-700 rounded-3xl flex items-center justify-center text-3xl shadow-sm">🏬</div>
-                <div>
-                    <h5 class="font-black text-xl">${v.store}</h5>
-                    <p class="text-sm opacity-50">هاتف: ${v.phone} | الباقة: <span class="text-ai font-bold">${v.plan}</span></p>
-                </div>
-            </div>
-            <div class="flex gap-4">
-                <button onclick="adminAction(${v.id}, 'approve')" class="px-10 py-4 bg-vendor text-white rounded-2xl font-black shadow-lg shadow-vendor/20">موافقة وتفعيل</button>
-                <button onclick="adminAction(${v.id}, 'reject')" class="px-10 py-4 bg-danger/10 text-danger rounded-2xl font-black hover:bg-danger hover:text-white transition">رفض</button>
-            </div>
-        </div>
-    `).join("");
-}
-
-function adminAction(id, type) {
-    const vendor = state.pendingVendors.find(v => v.id === id);
-    if(type === 'approve') {
-        showToast(`تم تفعيل متجر ${vendor.store} بنجاح!`, 'vendor');
-    } else {
-        showToast(`تم رفض طلب ${vendor.store}`, 'danger');
-    }
-    state.pendingVendors = state.pendingVendors.filter(v => v.id !== id);
-    renderAdminPending();
-}
-
-function openRegister(plan) {
-    showView('register');
-    showToast(`لقد اخترت باقة ${plan}، يرجى إكمال البيانات`, 'ai');
-}
-
-function submitRegistration(e) {
-    e.preventDefault();
-    showToast("تم إرسال طلبك بنجاح. سنرد عليك خلال 24 ساعة.", "vendor");
-    showView('home');
-}
-
-function toggleTheme() { document.documentElement.classList.toggle('dark'); }
-
-function showToast(msg, type) {
-    const container = document.getElementById("toast-container");
-    const toast = document.createElement("div");
-    toast.className = `p-5 rounded-3xl bg-white dark:bg-slate-800 shadow-2xl border-r-8 border-${type} text-xs font-black animate__animated animate__fadeInLeft`;
-    toast.innerHTML = msg;
-    container.appendChild(toast);
-    setTimeout(() => {
-        toast.classList.replace('animate__fadeInLeft', 'animate__fadeOutLeft');
-        setTimeout(() => toast.remove(), 500);
-    }, 4000);
-}
-
-// Start
-init();
-</script>
-</body>
-</html>
+    setTimeout(() =>
