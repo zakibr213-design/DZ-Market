@@ -11,26 +11,17 @@
             darkMode: 'class',
             theme: {
                 extend: {
-                    screens: {
-                        'xs': '360px'
-                    }
+                    screens: { 'xs': '360px' }
                 }
             }
         }
     </script>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        html, body { 
-            font-family: 'Cairo', sans-serif; 
-            overflow-x: hidden;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
+        html, body { font-family: 'Cairo', sans-serif; overflow-x: hidden; width: 100%; margin: 0; padding: 0; }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
@@ -38,8 +29,6 @@
     <!-- Header / Navbar -->
     <header class="w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50 shadow-sm transition-colors duration-200">
         <div class="w-full max-w-7xl mx-auto px-2.5 py-2 flex items-center justify-between gap-1">
-            
-            <!-- Logo & Title -->
             <div class="flex items-center gap-1.5 min-w-0 flex-1 overflow-hidden">
                 <div class="bg-indigo-600 text-white font-black px-2 py-1 rounded-lg text-xs tracking-wider shrink-0 shadow-sm shadow-indigo-500/20">
                     EUR
@@ -54,10 +43,7 @@
                 </div>
             </div>
 
-            <!-- Action Controls -->
             <div class="flex items-center gap-1 shrink-0">
-                
-                <!-- Language Toggle Button -->
                 <button id="langToggle" type="button" aria-label="Toggle Language" class="flex items-center gap-0.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold px-2 py-1.5 rounded-lg transition-all border border-slate-200 dark:border-slate-700 shrink-0">
                     <svg class="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
@@ -65,7 +51,6 @@
                     <span id="langLabel" class="text-[10px] sm:text-xs">FR</span>
                 </button>
 
-                <!-- Dark Mode Toggle Button -->
                 <button id="themeToggle" type="button" aria-label="Toggle Theme" class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-all border border-slate-200 dark:border-slate-700 shrink-0">
                     <svg class="w-3.5 h-3.5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
@@ -74,17 +59,6 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                     </svg>
                 </button>
-
-                <!-- Cart Button -->
-                <button type="button" aria-label="View Cart" class="relative p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-sm transition-all active:scale-95 shrink-0">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                    </svg>
-                    <span id="cart-counter" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-black w-3.5 h-3.5 rounded-full flex items-center justify-center border border-white dark:border-slate-900">
-                        0
-                    </span>
-                </button>
-
             </div>
         </div>
     </header>
@@ -116,7 +90,6 @@
                 <span id="txt-filter-label">تصفية حسب المقاس:</span>
             </div>
             
-            <!-- أزرار المقاسات -->
             <div id="size-filters" class="flex flex-wrap gap-1.5">
                 <button data-size="all" class="size-btn px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow-sm transition-all">
                     <span id="txt-btn-all">الكل</span>
@@ -133,10 +106,10 @@
         <!-- Product Grid -->
         <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
             
-            <!-- Item 1 (Size 42) -->
+            <!-- Item 1 -->
             <div data-size="42" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop" alt="Nike Air Max" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop" alt="Nike Air Max" class="product-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.5/10</span>
                     <span class="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md">المقاس: 42</span>
                 </div>
@@ -145,15 +118,15 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">Air Max Plus Red</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">6,800 د.ج</span>
-                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب عبر واتساب">🛒</button>
+                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب الآن">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 2 (Size 41) -->
+            <!-- Item 2 -->
             <div data-size="41" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <img src="https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=500&auto=format&fit=crop" alt="Adidas Ultraboost" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=500&auto=format&fit=crop" alt="Adidas Ultraboost" class="product-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.0/10</span>
                     <span class="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md">المقاس: 41</span>
                 </div>
@@ -162,15 +135,15 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">Ultraboost 21 Grey</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">7,200 د.ج</span>
-                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب عبر واتساب">🛒</button>
+                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب الآن">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 3 (Size 43) -->
+            <!-- Item 3 -->
             <div data-size="43" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?w=500&auto=format&fit=crop" alt="Puma Suede" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?w=500&auto=format&fit=crop" alt="Puma Suede" class="product-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 10/10</span>
                     <span class="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md">المقاس: 43</span>
                 </div>
@@ -179,15 +152,15 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">RS-X Triple Black</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">5,900 د.ج</span>
-                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب عبر واتساب">🛒</button>
+                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب الآن">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 4 (Size 40) -->
+            <!-- Item 4 -->
             <div data-size="40" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=500&auto=format&fit=crop" alt="Asics Gel Kayano" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=500&auto=format&fit=crop" alt="Asics Gel Kayano" class="product-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.5/10</span>
                     <span class="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md">المقاس: 40</span>
                 </div>
@@ -196,15 +169,15 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">Gel-Kayano 28 Running</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">8,500 د.ج</span>
-                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب عبر واتساب">🛒</button>
+                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب الآن">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 5 (Size 44) -->
+            <!-- Item 5 -->
             <div data-size="44" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500&auto=format&fit=crop" alt="New Balance 574" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500&auto=format&fit=crop" alt="New Balance 574" class="product-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.0/10</span>
                     <span class="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md">المقاس: 44</span>
                 </div>
@@ -213,15 +186,15 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">NB 574 Classic Navy</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">6,500 د.ج</span>
-                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب عبر واتساب">🛒</button>
+                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب الآن">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 6 (Size 42) -->
+            <!-- Item 6 -->
             <div data-size="42" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop" alt="Nike Jordan" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop" alt="Nike Jordan" class="product-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.8/10</span>
                     <span class="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md">المقاس: 42</span>
                 </div>
@@ -230,15 +203,15 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">Air Jordan 1 Low</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">9,200 د.ج</span>
-                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب عبر واتساب">🛒</button>
+                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب الآن">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 7 (Size 43) -->
+            <!-- Item 7 -->
             <div data-size="43" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <img src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=500&auto=format&fit=crop" alt="Reebok Classic" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=500&auto=format&fit=crop" alt="Reebok Classic" class="product-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.2/10</span>
                     <span class="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md">المقاس: 43</span>
                 </div>
@@ -247,15 +220,15 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">Club C 85 White</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">5,400 د.ج</span>
-                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب عبر واتساب">🛒</button>
+                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب الآن">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 8 (Size 45) -->
+            <!-- Item 8 -->
             <div data-size="45" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <img src="https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=500&auto=format&fit=crop" alt="Salomon XT-6" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=500&auto=format&fit=crop" alt="Salomon XT-6" class="product-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.6/10</span>
                     <span class="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md">المقاس: 45</span>
                 </div>
@@ -264,7 +237,7 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">XT-6 Gore-Tex</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">11,000 د.ج</span>
-                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب عبر واتساب">🛒</button>
+                        <button class="buy-btn p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors cursor-pointer" title="اطلب الآن">🛒</button>
                     </div>
                 </div>
             </div>
@@ -272,6 +245,49 @@
         </div>
 
     </main>
+
+    <!-- Checkout Modal (نافذة إتمام الطلب من داخل الموقع) -->
+    <div id="checkout-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-2xl p-4 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                <h3 class="font-black text-sm sm:text-base text-slate-900 dark:text-white">تأكيد طلب المنتج</h3>
+                <button id="close-modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-bold text-lg">✕</button>
+            </div>
+
+            <!-- معاينة المنتج المختارة مع صورته -->
+            <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                <img id="modal-img" src="" alt="Product" class="w-16 h-16 object-cover rounded-lg shrink-0 border border-slate-200 dark:border-slate-700">
+                <div class="min-w-0 flex-1">
+                    <span id="modal-brand" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 block"></span>
+                    <h4 id="modal-title" class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white truncate"></h4>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span id="modal-size" class="text-[10px] bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded font-bold"></span>
+                        <span id="modal-price" class="text-xs font-black text-emerald-600 dark:text-emerald-400"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- نموذج إدخال معلومات الزبون -->
+            <form id="order-form" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">الاسم الكامل:</label>
+                    <input type="text" id="customer-name" required placeholder="أدخل اسمك الكريم..." class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف:</label>
+                    <input type="tel" id="customer-phone" required placeholder="مثال: 0555555555" class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">الولاية / العنوان:</label>
+                    <input type="text" id="customer-address" required placeholder="مثال: الشلف، أولاد فارس..." class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-600">
+                </div>
+
+                <button type="submit" id="submit-order-btn" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer mt-2">
+                    <span>إرسال الطلب الآن</span>
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-4 text-center text-xs text-slate-500 dark:text-slate-400 mt-auto">
@@ -287,7 +303,7 @@
             document.documentElement.classList.toggle('dark');
         });
 
-        // 2. Language Switcher (AR / FR)
+        // 2. Language Switcher
         const translations = {
             ar: {
                 title: "أحذية أوروبية أصليّة",
@@ -331,18 +347,16 @@
             document.getElementById('txt-filter-label').textContent = langData.filterLabel;
             document.getElementById('txt-btn-all').textContent = langData.btnAll;
             document.getElementById('txt-footer-note').textContent = langData.footerNote;
-            
             langLabel.textContent = langData.nextLangLabel;
         });
 
-        // 3. Dynamic Size Filtering System (نظام تصفية المقاسات)
+        // 3. Dynamic Size Filtering
         const sizeButtons = document.querySelectorAll('.size-btn');
         const productItems = document.querySelectorAll('.product-item');
 
         sizeButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const selectedSize = button.getAttribute('data-size');
-
                 sizeButtons.forEach(btn => {
                     btn.className = "size-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 transition-all";
                 });
@@ -359,22 +373,76 @@
             });
         });
 
-        // 4. WhatsApp Order System (نظام الطلب عبر واتساب بالرقم المطلوب)
-        const whatsappNumber = "213558592542";
+        // 4. In-Site Checkout Modal & Telegram Integration System
+        const modal = document.getElementById('checkout-modal');
+        const closeModal = document.getElementById('close-modal');
+        let selectedProductData = null;
 
         document.querySelectorAll('.product-item').forEach(item => {
             const buyButton = item.querySelector('.buy-btn');
-            const brand = item.querySelector('span[class*="text-indigo"]').textContent;
-            const title = item.querySelector('h3').textContent;
-            const size = item.querySelector('.absolute.bottom-2.left-2').textContent;
-            const price = item.querySelector('.font-extrabold').textContent;
-
+            
             buyButton.addEventListener('click', () => {
-                const message = `السلام عليكم، أريد طلب هذا المنتج:\n\n- الماركة: ${brand}\n- المنتج: ${title}\n- ${size}\n- السعر: ${price}`;
-                const encodedMessage = encodeURIComponent(message);
-                
-                window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+                const imgUrl = item.querySelector('.product-img').src;
+                const brand = item.querySelector('span[class*="text-indigo"]').textContent;
+                const title = item.querySelector('h3').textContent;
+                const size = item.querySelector('.absolute.bottom-2.left-2').textContent;
+                const price = item.querySelector('.font-extrabold').textContent;
+
+                selectedProductData = { imgUrl, brand, title, size, price };
+
+                // ملء بيانات المعاينة داخل النافذة المنبثقة
+                document.getElementById('modal-img').src = imgUrl;
+                document.getElementById('modal-brand').textContent = brand;
+                document.getElementById('modal-title').textContent = title;
+                document.getElementById('modal-size').textContent = size;
+                document.getElementById('modal-price').textContent = price;
+
+                // إظهار النافذة
+                modal.classList.remove('hidden');
             });
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        // إرسال البيانات مباشرة عبر تليجرام (أو استبدالها برابط الـ API الخاص بك)
+        document.getElementById('order-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('customer-name').value;
+            const phone = document.getElementById('customer-phone').value;
+            const address = document.getElementById('customer-address').value;
+
+            // يمكنك إنشاء بوت تليجرام مجاني ووضع الـ Token ورقم الـ Chat ID هنا لكي يصلك الطلب مع الصورة فوراً
+            // مثال توضيحي للتنسيق الذي سيصلك:
+            const telegramBotToken = "YOUR_BOT_TOKEN"; 
+            const chatId = "YOUR_CHAT_ID";
+
+            const caption = `🛒 طلب جديد:\n\n- الماركة: ${selectedProductData.brand}\n- المنتج: ${selectedProductData.title}\n- ${selectedProductData.size}\n- السعر: ${selectedProductData.price}\n\n👤 الزبون: ${name}\n📞 الهاتف: ${phone}\n📍 العنوان: ${address}`;
+
+            if(telegramBotToken !== "YOUR_BOT_TOKEN") {
+                fetch(`https://api.telegram.org/bot${telegramBotToken}/sendPhoto`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        photo: selectedProductData.imgUrl,
+                        caption: caption
+                    })
+                }).then(() => {
+                    alert('تم إرسال طلبك بنجاح! سنتصل بك قريباً.');
+                    modal.classList.add('hidden');
+                    e.target.reset();
+                }).catch(() => {
+                    alert('حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً.');
+                });
+            } else {
+                // رسالة مؤقتة في حال لم تقم بربط البت بعد لتجربة الواجهة
+                alert(`تم استلام طلبك بنجاح يا ${name}!\n\n(لربط الإرسال الفوري مع صورتك الشخصية على تيليجرام أو بريدك، قم بإضافة بوت Token الخاص بك في الكود البرمجي).`);
+                modal.classList.add('hidden');
+                e.target.reset();
+            }
         });
     </script>
 </body>
