@@ -116,22 +116,25 @@
                 <span id="txt-filter-label">تصفية حسب المقاس:</span>
             </div>
             
-            <div class="flex flex-wrap gap-1.5">
-                <button id="txt-btn-all" class="px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow-sm">الكل</button>
-                <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">40</button>
-                <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">41</button>
-                <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">42</button>
-                <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">43</button>
-                <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">44</button>
-                <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">45</button>
+            <!-- أزرار المقاسات مجهزة بخصائص التصفية البرمجية -->
+            <div id="size-filters" class="flex flex-wrap gap-1.5">
+                <button data-size="all" class="size-btn px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow-sm transition-all">
+                    <span id="txt-btn-all">الكل</span>
+                </button>
+                <button data-size="40" class="size-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 transition-all">40</button>
+                <button data-size="41" class="size-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 transition-all">41</button>
+                <button data-size="42" class="size-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 transition-all">42</button>
+                <button data-size="43" class="size-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 transition-all">43</button>
+                <button data-size="44" class="size-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 transition-all">44</button>
+                <button data-size="45" class="size-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 transition-all">45</button>
             </div>
         </div>
 
-        <!-- Product Grid (شبكة المنتجات الإضافية) -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+        <!-- Product Grid -->
+        <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
             
-            <!-- Item 1 -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+            <!-- Item 1 (Size 42) -->
+            <div data-size="42" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
                     <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop" alt="Nike Air Max" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.5/10</span>
@@ -142,15 +145,13 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">Air Max Plus Red</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">6,800 د.ج</span>
-                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">
-                            🛒
-                        </button>
+                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 2 -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+            <!-- Item 2 (Size 41) -->
+            <div data-size="41" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
                     <img src="https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=500&auto=format&fit=crop" alt="Adidas Ultraboost" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.0/10</span>
@@ -161,15 +162,13 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">Ultraboost 21 Grey</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">7,200 د.ج</span>
-                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">
-                            🛒
-                        </button>
+                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 3 -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+            <!-- Item 3 (Size 43) -->
+            <div data-size="43" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
                     <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?w=500&auto=format&fit=crop" alt="Puma Suede" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 10/10</span>
@@ -180,15 +179,13 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">RS-X Triple Black</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">5,900 د.ج</span>
-                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">
-                            🛒
-                        </button>
+                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 4 -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+            <!-- Item 4 (Size 40) -->
+            <div data-size="40" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
                     <img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=500&auto=format&fit=crop" alt="Asics Gel Kayano" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.5/10</span>
@@ -199,15 +196,13 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">Gel-Kayano 28 Running</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">8,500 د.ج</span>
-                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">
-                            🛒
-                        </button>
+                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 5 -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+            <!-- Item 5 (Size 44) -->
+            <div data-size="44" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
                     <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500&auto=format&fit=crop" alt="New Balance 574" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.0/10</span>
@@ -218,15 +213,13 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">NB 574 Classic Navy</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">6,500 د.ج</span>
-                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">
-                            🛒
-                        </button>
+                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 6 -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+            <!-- Item 6 (Size 42) -->
+            <div data-size="42" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
                     <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop" alt="Nike Jordan" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.8/10</span>
@@ -237,15 +230,13 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">Air Jordan 1 Low</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">9,200 د.ج</span>
-                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">
-                            🛒
-                        </button>
+                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 7 -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+            <!-- Item 7 (Size 43) -->
+            <div data-size="43" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
                     <img src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=500&auto=format&fit=crop" alt="Reebok Classic" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.2/10</span>
@@ -256,15 +247,13 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">Club C 85 White</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">5,400 د.ج</span>
-                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">
-                            🛒
-                        </button>
+                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">🛒</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Item 8 -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
+            <!-- Item 8 (Size 45) -->
+            <div data-size="45" class="product-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
                 <div class="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
                     <img src="https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=500&auto=format&fit=crop" alt="Salomon XT-6" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">الحالة: 9.6/10</span>
@@ -275,9 +264,7 @@
                     <h3 class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white leading-snug line-clamp-1">XT-6 Gore-Tex</h3>
                     <div class="mt-auto pt-2 flex items-center justify-between gap-1">
                         <span class="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white">11,000 د.ج</span>
-                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">
-                            🛒
-                        </button>
+                        <button class="p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs transition-colors">🛒</button>
                     </div>
                 </div>
             </div>
@@ -292,15 +279,15 @@
         <p class="mt-1 text-[11px]">© 2026 EUR Shoes. All rights reserved.</p>
     </footer>
 
-    <!-- Interactive Translation & Theme Script -->
+    <!-- Scripts -->
     <script>
-        // Dark Mode Logic
+        // 1. Dark Mode Toggle
         const themeToggle = document.getElementById('themeToggle');
         themeToggle.addEventListener('click', () => {
             document.documentElement.classList.toggle('dark');
         });
 
-        // Dictionary Translation Object
+        // 2. Language Switcher (AR / FR)
         const translations = {
             ar: {
                 title: "أحذية أوروبية أصليّة",
@@ -332,7 +319,6 @@
 
         langToggle.addEventListener('click', () => {
             currentLang = currentLang === 'ar' ? 'fr' : 'ar';
-            
             document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
             document.documentElement.setAttribute('lang', currentLang);
 
@@ -347,6 +333,32 @@
             document.getElementById('txt-footer-note').textContent = langData.footerNote;
             
             langLabel.textContent = langData.nextLangLabel;
+        });
+
+        // 3. Dynamic Size Filtering System (نظام تصفية المقاسات الشغال)
+        const sizeButtons = document.querySelectorAll('.size-btn');
+        const productItems = document.querySelectorAll('.product-item');
+
+        sizeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const selectedSize = button.getAttribute('data-size');
+
+                // تحديث الشكل الخارجي للزر المحدد
+                sizeButtons.forEach(btn => {
+                    btn.className = "size-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 transition-all";
+                });
+                button.className = "size-btn px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow-sm transition-all";
+
+                // إظهار أو إخفاء المنتجات حسب المقاس
+                productItems.forEach(item => {
+                    const itemSize = item.getAttribute('data-size');
+                    if (selectedSize === 'all' || itemSize === selectedSize) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
         });
     </script>
 </body>
