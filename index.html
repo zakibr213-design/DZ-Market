@@ -1,98 +1,655 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="htmlTag" class="light">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Oras Click • متجر إلكتروني</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">متجر الأحذية الأوروبية الأصلية</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <!-- خط Tajawal -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- أيقونات Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* CSS المدمج */
-        :root { --primary: #6366f1; --bg: #f8f7ff; --text: #1e1b4b; --card: #ffffff; --border: rgba(99,102,241,0.15); }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); margin: 0; }
-        .navbar { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: white; border-bottom: 1px solid var(--border); }
-        .main { max-width: 1200px; margin: 20px auto; padding: 20px; }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        .product-card { background: var(--card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); transition: 0.3s; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .btn { padding: 10px 20px; border-radius: 8px; cursor: pointer; border: none; background: var(--primary); color: white; font-weight: bold; }
-        .cart-drawer { position: fixed; top:0; right:-400px; width:350px; height:100%; background:white; transition: 0.4s; padding:20px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); z-index:1000; }
-        .cart-drawer.open { right: 0; }
-        .modal-overlay { position: fixed; inset:0; background:rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center; z-index:2000; }
-        .modal-overlay.open { display:flex; }
-        .modal { background:white; padding:30px; border-radius:16px; width:90%; max-width:400px; }
+        body { font-family: 'Tajawal', sans-serif; }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 antialiased flex flex-col min-h-screen transition-colors duration-300">
 
-    <nav class="navbar">
-        <h1>Oras Click</h1>
-        <button class="btn" onclick="Store.openCart()">🛒 السلة (<span id="cart-badge">0</span>)</button>
-    </nav>
+    <!-- الشريط العلوي -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- الشعار -->
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <span class="bg-indigo-600 text-white p-2 rounded-xl font-black text-xl tracking-wider">EUR</span>
+                <div>
+                    <h1 data-i18n="storeName" class="font-extrabold text-lg sm:text-xl text-slate-900 dark:text-white leading-tight">أحذية أوروبية أصليّة</h1>
+                    <p data-i18n="storeSubtitle" class="text-xs text-slate-500 dark:text-slate-400">قطع فريدة مستعملة بحالة ممتازة</p>
+                </div>
+            </div>
 
-    <main class="main">
-        <input type="text" id="search-input" placeholder="ابحث عن منتج..." style="padding:10px; width:100%; margin-bottom:20px;">
-        <div class="products-grid" id="products-grid"></div>
+            <!-- أزرار الإعدادات (اللغة + الوضع المظلم + السلة) -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- زر تغيير اللغة -->
+                <button onclick="toggleLanguage()" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 px-3 py-2 rounded-xl font-bold text-xs transition flex items-center gap-1">
+                    <i data-lucide="globe" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
+                    <span id="langLabel">FR</span>
+                </button>
+
+                <!-- زر الوضع المظلم/الفاتح -->
+                <button onclick="toggleDarkMode()" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 p-2 rounded-xl transition">
+                    <i id="themeIcon" data-lucide="moon" class="w-5 h-5 text-indigo-600 dark:text-amber-400"></i>
+                </button>
+
+                <!-- زر السلة -->
+                <button id="cartBtn" class="relative bg-indigo-600 hover:bg-indigo-700 text-white p-2.5 rounded-xl transition flex items-center gap-2">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span data-i18n="cart" class="hidden sm:inline font-bold text-sm">السلة</span>
+                    <span id="cartCount" class="bg-white text-indigo-600 text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- قسم العرض -->
+    <section class="bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-800 text-white py-12 px-4 sm:px-6">
+        <div class="max-w-4xl mx-auto text-center space-y-4">
+            <span data-i18n="badge" class="inline-block bg-indigo-500/20 text-indigo-300 text-xs font-bold px-3 py-1 rounded-full border border-indigo-500/30">
+                100% ماركات أصلية مفحوصة
+            </span>
+            <h2 data-i18n="heroTitle" class="text-2xl sm:text-4xl font-black leading-tight">
+                احصل على أحذية الماركات العالمية الجودة والأناقة بسعر استثنائي
+            </h2>
+            <p data-i18n="heroDesc" class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
+                جميع الأحذية قطعة واحدة فريدة بمقاس محدد. تصفح المقاس المناسب واطلبها مباشرة لتصلك حتى باب البيت أو المكتب.
+            </p>
+        </div>
+    </section>
+
+    <!-- محتوى المتجر -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+        <!-- شريط الفلترة -->
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-8 bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm transition-colors">
+            <div class="flex items-center gap-2">
+                <i data-lucide="filter" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
+                <span data-i18n="filterBy" class="font-bold text-slate-700 dark:text-slate-200 text-sm">تصفية حسب المقاس:</span>
+            </div>
+            <div class="flex flex-wrap gap-2" id="sizeFilters">
+                <button onclick="filterBySize('ALL')" data-i18n="all" class="size-filter-btn bg-indigo-600 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition">الكل</button>
+                <button onclick="filterBySize('40')" class="size-filter-btn bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-200 font-bold text-xs px-3.5 py-2 rounded-xl transition">40</button>
+                <button onclick="filterBySize('41')" class="size-filter-btn bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-200 font-bold text-xs px-3.5 py-2 rounded-xl transition">41</button>
+                <button onclick="filterBySize('42')" class="size-filter-btn bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-200 font-bold text-xs px-3.5 py-2 rounded-xl transition">42</button>
+                <button onclick="filterBySize('43')" class="size-filter-btn bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-200 font-bold text-xs px-3.5 py-2 rounded-xl transition">43</button>
+                <button onclick="filterBySize('44')" class="size-filter-btn bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-200 font-bold text-xs px-3.5 py-2 rounded-xl transition">44</button>
+            </div>
+        </div>
+
+        <!-- شبكة المنتجات -->
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </main>
 
-    <div class="cart-drawer" id="cart-drawer">
-        <button onclick="Store.closeCart()">إغلاق</button>
-        <div id="cart-items"></div>
-        <button class="btn" id="checkout-btn" onclick="Store.checkout()" disabled>✅ إتمام الطلب</button>
-    </div>
+    <!-- نافذة عرض المنتج بحجم كبير (Product Detail Modal) -->
+    <div id="productModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl border border-slate-100 dark:border-slate-700 relative animate-in fade-in zoom-in duration-200">
+            <!-- زر الإغلاق -->
+            <button onclick="closeProductModal()" class="absolute top-4 left-4 rtl:left-auto rtl:right-4 z-10 bg-slate-900/60 hover:bg-slate-900 text-white p-2 rounded-full backdrop-blur-md transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
 
-    <div class="modal-overlay" id="checkout-modal">
-        <div class="modal">
-            <h3>بيانات الطلب</h3>
-            <input type="text" id="client-name" placeholder="الاسم" style="width:100%; margin:10px 0; padding:10px;">
-            <input type="tel" id="client-phone" placeholder="الهاتف" style="width:100%; margin:10px 0; padding:10px;">
-            <button class="btn" onclick="Store.sendOrder()">إرسال إلى واتساب</button>
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <!-- صورة المنتج المكبرة -->
+                <div class="bg-slate-100 dark:bg-slate-700 h-64 md:h-full relative flex items-center justify-center overflow-hidden">
+                    <img id="modalProductImage" src="" class="w-full h-full object-cover">
+                    <span id="modalProductCondition" class="absolute bottom-3 right-3 rtl:right-auto rtl:left-3 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-xl shadow"></span>
+                </div>
+
+                <!-- تفاصيل المنتج -->
+                <div class="p-6 flex flex-col justify-between space-y-6">
+                    <div class="space-y-3">
+                        <span id="modalProductBrand" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider"></span>
+                        <h3 id="modalProductTitle" class="text-xl font-extrabold text-slate-900 dark:text-white leading-snug"></h3>
+                        <p id="modalProductDesc" class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed"></p>
+
+                        <!-- مواصفات المقاس والحالة -->
+                        <div class="pt-2 flex items-center gap-3">
+                            <span id="modalProductSize" class="bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-600"></span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 border-t border-slate-100 dark:border-slate-700 pt-4">
+                        <div class="flex items-baseline justify-between">
+                            <span data-i18n="price" class="text-xs text-slate-400 font-bold">السعر:</span>
+                            <span id="modalProductPrice" class="font-black text-2xl text-slate-900 dark:text-white"></span>
+                        </div>
+                        <button id="modalAddToCartBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-4 rounded-2xl transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/20">
+                            <i data-lucide="plus" class="w-5 h-5"></i>
+                            <span data-i18n="addToCart">أضف للسلة</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        const Store = {
-            products: [
-                { id: 1, name: "هاتف OnePlus Ace 5 Ultra", price: 85000 },
-                { id: 2, name: "حذاء رياضي", price: 12000 },
-                { id: 3, name: "حقيبة ظهر", price: 8500 }
-            ],
-            cart: [],
-            
-            init() {
-                const grid = document.getElementById('products-grid');
-                grid.innerHTML = this.products.map(p => `
-                    <div class="product-card">
-                        <h3>${p.name}</h3>
-                        <p>${p.price} دج</p>
-                        <button class="btn" onclick="Store.addToCart(${p.id})">إضافة</button>
+    <!-- لوحة السلة الجانبية -->
+    <div id="cartOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="cartDrawer" class="fixed inset-y-0 right-0 max-w-md w-full bg-white dark:bg-slate-800 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300">
+            <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-slate-50 dark:bg-slate-800/50">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
+                    <h3 data-i18n="cartTitle" class="font-bold text-slate-800 dark:text-white">سلة الطلبات</h3>
+                </div>
+                <button id="closeCartBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
+
+            <div class="p-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 space-y-3">
+                <div class="flex justify-between items-center font-bold text-slate-800 dark:text-white text-lg">
+                    <span data-i18n="total">المجموع الإجمالي:</span>
+                    <span id="cartTotal">0 د.ج</span>
+                </div>
+                <button onclick="openCheckoutModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-indigo-600/20">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                    <span data-i18n="checkout">إتمام الطلب وإدخال معلومات التوصيل</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إدخال المعلومات (Checkout Modal) -->
+    <div id="checkoutModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto border border-slate-100 dark:border-slate-700">
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-3">
+                <h3 data-i18n="deliveryInfo" class="font-bold text-lg text-slate-800 dark:text-white">معلومات التوصيل</h3>
+                <button onclick="closeCheckoutModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <form id="orderForm" onsubmit="submitOrder(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label data-i18n="firstName" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">الاسم</label>
+                        <input type="text" id="firstName" required class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-indigo-600">
                     </div>
-                `).join('');
-            },
+                    <div>
+                        <label data-i18n="lastName" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">اللقب</label>
+                        <input type="text" id="lastName" required class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-indigo-600">
+                    </div>
+                </div>
 
-            addToCart(id) {
-                this.cart.push(this.products.find(p => p.id === id));
-                document.getElementById('cart-badge').innerText = this.cart.length;
-                document.getElementById('checkout-btn').disabled = false;
-                alert("تمت الإضافة!");
-            },
+                <div>
+                    <label data-i18n="phone" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف</label>
+                    <input type="tel" id="phone" placeholder="06XXXXXXXX" required class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-indigo-600">
+                </div>
 
-            openCart() { document.getElementById('cart-drawer').classList.add('open'); },
-            closeCart() { document.getElementById('cart-drawer').classList.remove('open'); },
-            checkout() { document.getElementById('checkout-modal').classList.add('open'); },
-            
-            sendOrder() {
-                const name = document.getElementById('client-name').value;
-                const phone = document.getElementById('client-phone').value;
-                const items = this.cart.map(p => p.name).join(', ');
-                const msg = `طلب جديد: الاسم ${name}، الهاتف ${phone}، المنتجات: ${items}`;
-                window.open(`https://wa.me/213558592542?text=${encodeURIComponent(msg)}`, '_blank');
-                this.closeCart();
-                document.getElementById('checkout-modal').classList.remove('open');
-                this.cart = [];
-                document.getElementById('cart-badge').innerText = '0';
+                <div>
+                    <label data-i18n="deliveryType" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">مكان التوصيل</label>
+                    <select id="deliveryType" onchange="toggleAddressFields()" class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-indigo-600 font-bold text-slate-800 dark:text-white">
+                        <option value="توصيل إلى المكتب" data-i18n="officeDelivery">توصيل إلى المكتب (استلام من مقر الشركة)</option>
+                        <option value="توصيل إلى المنزل" data-i18n="homeDelivery">توصيل إلى المنزل (حتى باب البيت)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label data-i18n="wilaya" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">الولاية</label>
+                    <select id="state" required class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-indigo-600 font-medium text-slate-800 dark:text-white">
+                        <option value="" disabled selected data-i18n="selectWilaya">اختر ولايتك...</option>
+                    </select>
+                </div>
+
+                <div id="homeAddressContainer" class="hidden">
+                    <label data-i18n="homeAddress" class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">عنوان المنزل والبلدية</label>
+                    <input type="text" id="homeAddress" data-i18n-ph="homeAddressPh" placeholder="البلدية، اسم الحي أو الشارع..." class="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:border-indigo-600">
+                </div>
+
+                <button type="submit" id="submitOrderBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-4 rounded-xl transition shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 mt-2">
+                    <i data-lucide="check-circle" class="w-5 h-5"></i>
+                    <span data-i18n="confirmOrder">تأكيد وإرسال الطلب الآن</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- الفوتر -->
+    <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs space-y-2">
+            <p data-i18n="footerNote">جميع الأحذية المعروضة أصلية 100% ومفحوصة بدقة.</p>
+            <p>© 2026 EUR Shoes. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- جافاسكريبت المتجر -->
+    <script>
+        const TELEGRAM_BOT_TOKEN = "8519183312:AAEzKz2CMNTJGLWYM_11bCpn0yg15LS0zDY";
+const TELEGRAM_CHAT_ID = "7871148784";
+
+        let currentLang = localStorage.getItem('storeLang') || 'ar';
+        const i18n = {
+            ar: {
+                pageTitle: "متجر الأحذية الأوروبية الأصلية",
+                storeName: "أحذية أوروبية أصليّة",
+                storeSubtitle: "قطع فريدة مستعملة بحالة ممتازة",
+                cart: "السلة",
+                badge: "100% ماركات أصلية مفحوصة",
+                heroTitle: "احصل على أحذية الماركات العالمية الجودة والأناقة بسعر استثنائي",
+                heroDesc: "جميع الأحذية قطعة واحدة فريدة بمقاس محدد. تصفح المقاس المناسب واطلبها مباشرة لتصلك حتى باب البيت أو المكتب.",
+                filterBy: "تصفية حسب المقاس:",
+                all: "الكل",
+                size: "المقاس",
+                condition: "الحالة",
+                price: "السعر",
+                addToCart: "أضف للسلة",
+                cartTitle: "سلة الطلبات",
+                cartEmpty: "السلة فارغة حالياً.",
+                total: "المجموع الإجمالي:",
+                checkout: "إتمام الطلب وإدخال معلومات التوصيل",
+                deliveryInfo: "معلومات التوصيل",
+                firstName: "الاسم",
+                lastName: "اللقب",
+                phone: "رقم الهاتف",
+                deliveryType: "مكان التوصيل",
+                officeDelivery: "توصيل إلى المكتب (استلام من مقر الشركة)",
+                homeDelivery: "توصيل إلى المنزل (حتى باب البيت)",
+                wilaya: "الولاية",
+                selectWilaya: "اختر ولايتك...",
+                homeAddress: "عنوان المنزل والبلدية",
+                homeAddressPh: "البلدية، اسم الحي أو الشارع...",
+                confirmOrder: "تأكيد وإرسال الطلب الآن",
+                footerNote: "جميع الأحذية المعروضة أصلية 100% ومفحوصة بدقة.",
+                currency: "د.ج",
+                clickZoom: "اضغط للتكبير والتفاصيل"
+            },
+            fr: {
+                pageTitle: "Boutique de Chaussures Européennes Originales",
+                storeName: "Chaussures Originales",
+                storeSubtitle: "Pièces uniques en excellent état",
+                cart: "Panier",
+                badge: "100% Marques Originales Vérifiées",
+                heroTitle: "Obtenez des chaussures de marque à un prix exceptionnel",
+                heroDesc: "Chaque paire est unique. Choisissez votre pointure et commandez directement à domicile ou en bureau.",
+                filterBy: "Filtrer par pointure:",
+                all: "Tous",
+                size: "Taille",
+                condition: "État",
+                price: "Prix",
+                addToCart: "Ajouter au panier",
+                cartTitle: "Mon Panier",
+                cartEmpty: "Votre panier est vide.",
+                total: "Total:",
+                checkout: "Valider la commande",
+                deliveryInfo: "Informations de livraison",
+                firstName: "Prénom",
+                lastName: "Nom",
+                phone: "Téléphone",
+                deliveryType: "Mode de livraison",
+                officeDelivery: "Livraison au bureau (Stop Desk)",
+                homeDelivery: "Livraison à domicile",
+                wilaya: "Wilaya",
+                selectWilaya: "Sélectionnez votre wilaya...",
+                homeAddress: "Adresse du domicile et commune",
+                homeAddressPh: "Commune, rue, quartier...",
+                confirmOrder: "Confirmer la commande",
+                footerNote: "Toutes nos chaussures sont 100% originales et vérifiées.",
+                currency: "DZD",
+                clickZoom: "Cliquer pour agrandir"
             }
         };
-        Store.init();
+
+        const dzWilayas = [
+            "01 - أدرار - Adrar", "02 - الشلف - Chlef", "03 - الأغواط - Laghouat", "04 - أم البواقي - Oum El Bouaghi", "05 - باتنة - Batna",
+            "06 - بجاية - Béjaïa", "07 - بسكرة - Biskra", "08 - بشار - Béchar", "09 - البليدة - Blida", "10 - البويرة - Bouira",
+            "11 - تمنراست - Tamanrasset", "12 - تبسة - Tébessa", "13 - تلمسان - Tlemcen", "14 - تيارت - Tiaret", "15 - تيزي وزو - Tizi Ouzou",
+            "16 - الجزائر - Alger", "17 - الجلفة - Djelfa", "18 - جيجل - Jijel", "19 - سطيف - Sétif", "20 - سعيدة - Saïda",
+            "21 - سكيكدة - Skikda", "22 - سيدي بلعباس - Sidi Bel Abbès", "23 - عنابة - Annaba", "24 - قالمة - Guelma", "25 - قسنطينة - Constantine",
+            "26 - المدية - Médéa", "27 - مستغانم - Mostaganem", "28 - المسيلة - M'Sila", "29 - معسكر - Mascara", "30 - ورقلة - Ouargla",
+            "31 - وهران - Oran", "32 - البيض - El Bayadh", "33 - إليزي - Illizi", "34 - برج بوعريريج - Bordj Bou Arréridj", "35 - بومرداس - Boumerdès",
+            "36 - الطارف - El Tarf", "37 - تندوف - Tindouf", "38 - تسمسيلت - Tissemsilt", "39 - الوادي - El Oued", "40 - خنشلة - Khenchela",
+            "41 - سوق أهراس - Souk Ahras", "42 - تيبازة - Tipaza", "43 - ميلة - Mila", "44 - عين الدفلى - Aïn Defla", "45 - النعامة - Naâma",
+            "46 - عين تموشنت - Aïn Témouchent", "47 - غرداية - Ghardaïa", "48 - غليزان - Relizane", "49 - المغير - El M'Ghair", "50 - المنيعة - El Meniaa",
+            "51 - أولاد جلال - Ouled Djellal", "52 - برج باجي مختار - Bordj Baji Mokhtar", "53 - بني عباس - Béni Abbès", "54 - تيميمون - Timimoun",
+            "55 - تقرت - Touggourt", "56 - جانت - Djanet", "57 - إن صالح - In Salah", "58 - إن قزام - In Guezzam"
+        ];
+
+        function populateWilayas() {
+            const stateSelect = document.getElementById('state');
+            stateSelect.innerHTML = `<option value="" disabled selected data-i18n="selectWilaya">${i18n[currentLang].selectWilaya}</option>`;
+            dzWilayas.forEach(wilaya => {
+                const opt = document.createElement('option');
+                opt.value = wilaya;
+                opt.textContent = wilaya;
+                stateSelect.appendChild(opt);
+            });
+        }
+
+        function applyLanguageUI() {
+            document.getElementById('htmlTag').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('htmlTag').lang = currentLang;
+            document.getElementById('langLabel').textContent = currentLang === 'ar' ? 'FR' : 'AR';
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[currentLang][key]) {
+                    el.textContent = i18n[currentLang][key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.getAttribute('data-i18n-ph');
+                if (i18n[currentLang][key]) {
+                    el.placeholder = i18n[currentLang][key];
+                }
+            });
+
+            document.getElementById('pageTitle').textContent = i18n[currentLang].pageTitle;
+            
+            const drawer = document.getElementById('cartDrawer');
+            if (currentLang === 'ar') {
+                drawer.classList.remove('left-0', '-translate-x-full');
+                drawer.classList.add('right-0', 'translate-x-full');
+            } else {
+                drawer.classList.remove('right-0', 'translate-x-full');
+                drawer.classList.add('left-0', '-translate-x-full');
+            }
+
+            renderProducts();
+            updateCartUI();
+            lucide.createIcons();
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'fr' : 'ar';
+            localStorage.setItem('storeLang', currentLang);
+            applyLanguageUI();
+        }
+
+        function toggleDarkMode() {
+            const html = document.getElementById('htmlTag');
+            const themeIcon = document.getElementById('themeIcon');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                themeIcon.setAttribute('data-lucide', 'moon');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.setAttribute('data-lucide', 'sun');
+            }
+            lucide.createIcons();
+        }
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.getElementById('htmlTag').classList.add('dark');
+        }
+
+        const products = [
+            { id: 1, title: "Nike Air Zoom Pegasus", brand: "Nike", size: "42", condition: "9.5 / 10", price: 7800, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80", desc: "حذاء رياضي أصلي مريح جداً مناسب للجري والأنشطة اليومية بحالة ممتازة." },
+            { id: 2, title: "Adidas Ultraboost 21", brand: "Adidas", size: "41", condition: "9.0 / 10", price: 8500, image: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=600&q=80", desc: "حذاء أديداس مع تقنية التوسيد الفائقة للمشي والممارسة الرياضية الطويلة." },
+            { id: 3, title: "Puma RS-X Bold", brand: "Puma", size: "43", condition: "9.5 / 10", price: 6900, image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=600&q=80", desc: "تصميم عصري وجريء من بوما يوفر راحة تامة ومظهر ستريت وير أنيق." },
+            { id: 4, title: "New Balance 574 Classic", brand: "New Balance", size: "40", condition: "10 / 10", price: 9200, image: "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=600&q=80", desc: "النسخة الكلاسيكية الأيقونية من نيوبالانس بحالة جديدة تماماً." },
+            { id: 5, title: "Asics Gel-Kayano 28", brand: "Asics", size: "44", condition: "8.5 / 10", price: 6400, image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=600&q=80", desc: "حذاء احترافي داعم للقدم والعمود الفقري مثالي جداً للجري المسافات الطويلة." }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('storeCart')) || [];
+
+        function renderProducts(items = products) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            const t = i18n[currentLang];
+
+            items.forEach(product => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col cursor-pointer group";
+                
+                card.innerHTML = `
+                    <div onclick="openProductModal(${product.id})" class="relative bg-slate-100 dark:bg-slate-700 h-56 overflow-hidden">
+                        <img src="${product.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-3 right-3 rtl:right-auto rtl:left-3 bg-slate-900/80 text-white text-xs font-bold px-2.5 py-1 rounded-lg">${t.size}: ${product.size} EU</span>
+                        <span class="absolute top-3 left-3 rtl:left-auto rtl:right-3 bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg">${t.condition}: ${product.condition}</span>
+                        <div class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                            <span class="bg-white/90 text-slate-900 text-xs font-bold px-3 py-1.5 rounded-full shadow backdrop-blur-sm flex items-center gap-1">
+                                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> ${t.clickZoom}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div onclick="openProductModal(${product.id})">
+                            <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase">${product.brand}</span>
+                            <h3 class="font-bold text-slate-800 dark:text-white text-base mt-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">${product.title}</h3>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-700 pt-3">
+                            <div>
+                                <span class="text-xs text-slate-400 block">${t.price}</span>
+                                <span class="font-extrabold text-slate-900 dark:text-white text-lg">${product.price.toLocaleString()} ${t.currency}</span>
+                            </div>
+                            <button onclick="addToCart(${product.id}); event.stopPropagation();" class="bg-indigo-600 hover:bg-indigo-700 text-white p-2.5 rounded-xl transition font-bold text-xs flex items-center gap-1.5">
+                                <i data-lucide="plus" class="w-4 h-4"></i> ${t.addToCart}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // فتح نافذة المعاينة المكبرة
+        function openProductModal(id) {
+            const product = products.find(p => p.id === id);
+            const t = i18n[currentLang];
+
+            document.getElementById('modalProductImage').src = product.image;
+            document.getElementById('modalProductBrand').innerText = product.brand;
+            document.getElementById('modalProductTitle').innerText = product.title;
+            document.getElementById('modalProductDesc').innerText = product.desc || '';
+            document.getElementById('modalProductSize').innerText = `${t.size}: ${product.size} EU`;
+            document.getElementById('modalProductCondition').innerText = `${t.condition}: ${product.condition}`;
+            document.getElementById('modalProductPrice').innerText = `${product.price.toLocaleString()} ${t.currency}`;
+
+            const addToCartBtn = document.getElementById('modalAddToCartBtn');
+            addToCartBtn.onclick = () => {
+                addToCart(product.id);
+                closeProductModal();
+            };
+
+            document.getElementById('productModal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+        }
+
+        // إغلاق النافذة عند الضغط خارجها
+        document.getElementById('productModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('productModal')) {
+                closeProductModal();
+            }
+        });
+
+        function filterBySize(size) {
+            if (size === 'ALL') renderProducts(products);
+            else renderProducts(products.filter(p => p.size === size));
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            if (!cart.some(item => item.id === id)) {
+                cart.push(product);
+                saveCart();
+                updateCartUI();
+                openCart();
+            } else {
+                alert(currentLang === 'ar' ? "هذا الحذاء موجود بالفعل في السلة!" : "Ce produit est déjà dans le panier!");
+            }
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            saveCart();
+            updateCartUI();
+        }
+
+        function saveCart() {
+            localStorage.setItem('storeCart', JSON.stringify(cart));
+        }
+
+        function updateCartUI() {
+            document.getElementById('cartCount').innerText = cart.length;
+            const container = document.getElementById('cartItems');
+            const totalElement = document.getElementById('cartTotal');
+            container.innerHTML = '';
+            let total = 0;
+            const t = i18n[currentLang];
+
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-center text-slate-400 py-8 text-sm">${t.cartEmpty}</p>`;
+                totalElement.innerText = `0 ${t.currency}`;
+                return;
+            }
+
+            cart.forEach(item => {
+                total += item.price;
+                const div = document.createElement('div');
+                div.className = "flex items-center gap-3 bg-slate-50 dark:bg-slate-700/50 p-3 rounded-xl border border-slate-200 dark:border-slate-600";
+                div.innerHTML = `
+                    <img src="${item.image}" class="w-16 h-16 object-cover rounded-lg">
+                    <div class="flex-1">
+                        <h4 class="font-bold text-xs text-slate-800 dark:text-white">${item.title}</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-300">${t.size}: ${item.size} | ${item.price.toLocaleString()} ${t.currency}</p>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})" class="text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/30 p-1.5 rounded-lg">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+            totalElement.innerText = `${total.toLocaleString()} ${t.currency}`;
+            lucide.createIcons();
+        }
+
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartDrawer = document.getElementById('cartDrawer');
+        function openCart() { 
+            cartOverlay.classList.remove('opacity-0', 'pointer-events-none'); 
+            cartDrawer.classList.remove('translate-x-full', '-translate-x-full'); 
+        }
+        function closeCart() { 
+            cartOverlay.classList.add('opacity-0', 'pointer-events-none'); 
+            if (currentLang === 'ar') cartDrawer.classList.add('translate-x-full');
+            else cartDrawer.classList.add('-translate-x-full');
+        }
+
+        document.getElementById('cartBtn').addEventListener('click', openCart);
+        document.getElementById('closeCartBtn').addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', (e) => { if (e.target === cartOverlay) closeCart(); });
+
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                alert(currentLang === 'ar' ? "السلة فارغة!" : "Le panier est vide!");
+                return;
+            }
+            closeCart();
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        function toggleAddressFields() {
+            const deliveryType = document.getElementById('deliveryType').value;
+            const homeAddressContainer = document.getElementById('homeAddressContainer');
+            const homeAddressInput = document.getElementById('homeAddress');
+
+            if (deliveryType.includes('المنزل') || deliveryType.includes('domicile')) {
+                homeAddressContainer.classList.remove('hidden');
+                homeAddressInput.setAttribute('required', 'true');
+            } else {
+                homeAddressContainer.classList.add('hidden');
+                homeAddressInput.removeAttribute('required');
+                homeAddressInput.value = '';
+            }
+        }
+
+        async function submitOrder(e) {
+            e.preventDefault();
+            if (cart.length === 0) return;
+
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const phone = document.getElementById('phone').value;
+            const deliveryType = document.getElementById('deliveryType').value;
+            const state = document.getElementById('state').value;
+            const homeAddress = document.getElementById('homeAddress').value;
+
+            let total = cart.reduce((sum, item) => sum + item.price, 0);
+
+            let message = `🚨 *طلب جديد تم استلامه (${currentLang.toUpperCase()})!*\n\n`;
+            message += `👤 *الاسم الكامل:* ${firstName} ${lastName}\n`;
+            message += `📞 *رقم الهاتف:* ${phone}\n`;
+            message += `🚚 *طريقة التوصيل:* ${deliveryType}\n`;
+            message += `📍 *الولاية:* ${state}\n`;
+
+            if (homeAddress) {
+                message += `🏠 *العنوان والبلدية:* ${homeAddress}\n`;
+            }
+
+            message += `\n🛍️ *المنتجات المطلوبة:*\n`;
+            cart.forEach((item, index) => {
+                message += `${index + 1}. ${item.title} (مقاس: ${item.size}) - ${item.price.toLocaleString()} د.ج\n`;
+            });
+
+            message += `\n💰 *المجموع الإجمالي:* ${total.toLocaleString()} د.ج`;
+
+            const btn = document.getElementById('submitOrderBtn');
+            btn.innerText = currentLang === 'ar' ? "جاري إرسال الطلب..." : "Envoi en cours...";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+
+                if (response.ok) {
+                    alert(currentLang === 'ar' ? "تم إرسال طلبك بنجاح! سنتصل بك قريباً." : "Commande envoyée avec succès! Nous vous contacterons bientôt.");
+                    cart = [];
+                    saveCart();
+                    updateCartUI();
+                    closeCheckoutModal();
+                    document.getElementById('orderForm').reset();
+                    toggleAddressFields();
+                } else {
+                    alert(currentLang === 'ar' ? "حدث خطأ أثناء إرسال الطلب." : "Erreur lors de l'envoi.");
+                }
+            } catch (error) {
+                console.error(error);
+                alert(currentLang === 'ar' ? "تأكد من الاتصال بالإنترنت." : "Vérifiez votre connexion internet.");
+            } finally {
+                btn.innerText = i18n[currentLang].confirmOrder;
+                btn.disabled = false;
+            }
+        }
+
+        window.onload = () => { 
+            populateWilayas();
+            applyLanguageUI();
+        };
     </script>
 </body>
 </html>
