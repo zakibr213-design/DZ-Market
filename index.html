@@ -23,9 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         html, body { 
             font-family: 'Cairo', sans-serif; 
             overflow-x: hidden;
@@ -37,26 +35,26 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
 
-    <!-- Header / Navbar المُصمّم خصيصاً للموبايل -->
+    <!-- Header / Navbar -->
     <header class="w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50 shadow-sm transition-colors duration-200">
         <div class="w-full max-w-7xl mx-auto px-2.5 py-2 flex items-center justify-between gap-1">
             
-            <!-- Logo & Brand Title -->
+            <!-- Logo & Title -->
             <div class="flex items-center gap-1.5 min-w-0 flex-1 overflow-hidden">
                 <div class="bg-indigo-600 text-white font-black px-2 py-1 rounded-lg text-xs tracking-wider shrink-0 shadow-sm shadow-indigo-500/20">
                     EUR
                 </div>
                 <div class="flex flex-col min-w-0 overflow-hidden">
-                    <h1 class="font-extrabold text-[11px] xs:text-xs sm:text-base text-slate-900 dark:text-white leading-tight truncate">
+                    <h1 id="txt-title" class="font-extrabold text-[11px] xs:text-xs sm:text-base text-slate-900 dark:text-white leading-tight truncate">
                         أحذية أوروبية أصليّة
                     </h1>
-                    <p class="text-[9px] xs:text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 truncate hidden xs:block">
+                    <p id="txt-subtitle" class="text-[9px] xs:text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 truncate hidden xs:block">
                         قطع فريدة مستعملة بحالة ممتازة
                     </p>
                 </div>
             </div>
 
-            <!-- Action Controls (Language, Dark Mode, Cart) -->
+            <!-- Action Controls -->
             <div class="flex items-center gap-1 shrink-0">
                 
                 <!-- Language Toggle Button -->
@@ -69,11 +67,9 @@
 
                 <!-- Dark Mode Toggle Button -->
                 <button id="themeToggle" type="button" aria-label="Toggle Theme" class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-all border border-slate-200 dark:border-slate-700 shrink-0">
-                    <!-- Sun Icon -->
                     <svg class="w-3.5 h-3.5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
                     </svg>
-                    <!-- Moon Icon -->
                     <svg class="w-3.5 h-3.5 dark:hidden text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                     </svg>
@@ -96,13 +92,13 @@
     <!-- Hero Section -->
     <section class="bg-gradient-to-b from-indigo-950 via-slate-900 to-slate-950 text-white py-8 px-4 text-center relative overflow-hidden">
         <div class="max-w-3xl mx-auto space-y-3 relative z-10">
-            <span class="inline-block bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[11px] sm:text-xs px-3 py-1 rounded-full font-bold">
+            <span id="txt-badge" class="inline-block bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[11px] sm:text-xs px-3 py-1 rounded-full font-bold">
                 100% ماركات أصلية مفحوصة
             </span>
-            <h2 class="text-xl sm:text-3xl font-black leading-snug px-2">
+            <h2 id="txt-hero-title" class="text-xl sm:text-3xl font-black leading-snug px-2">
                 احصل على أحذية الماركات العالمية الجودة والأناقة بسعر استثنائي
             </h2>
-            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl mx-auto px-2">
+            <p id="txt-hero-desc" class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl mx-auto px-2">
                 جميع الأحذية قطعة واحدة فريدة بمقاس محدد. تصفح المقاس المناسب واطلبها مباشرة لتصلك حتى باب البيت أو المكتب.
             </p>
         </div>
@@ -117,11 +113,11 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
                 </svg>
-                <span>تصفية حسب المقاس:</span>
+                <span id="txt-filter-label">تصفية حسب المقاس:</span>
             </div>
             
             <div class="flex flex-wrap gap-1.5">
-                <button class="px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow-sm">الكل</button>
+                <button id="txt-btn-all" class="px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow-sm">الكل</button>
                 <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">40</button>
                 <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">41</button>
                 <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">42</button>
@@ -134,35 +130,69 @@
 
     <!-- Footer -->
     <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-4 text-center text-xs text-slate-500 dark:text-slate-400 mt-auto">
-        <p class="font-medium">جميع الأحذية المعروضة أصلية 100% ومفحوصة بدقة.</p>
-        <p class="mt-1 text-[11px]">© 2026 EUR Shoes. جميع الحقوق محفوظة.</p>
+        <p id="txt-footer-note" class="font-medium">جميع الأحذية المعروضة أصلية 100% ومفحوصة بدقة.</p>
+        <p class="mt-1 text-[11px]">© 2026 EUR Shoes. All rights reserved.</p>
     </footer>
 
-    <!-- Interactive Script for Language & Dark Mode -->
+    <!-- Interactive Translation & Theme Script -->
     <script>
-        // Dark Mode Toggle Logic
+        // Dark Mode Logic
         const themeToggle = document.getElementById('themeToggle');
         themeToggle.addEventListener('click', () => {
             document.documentElement.classList.toggle('dark');
         });
 
-        // Language Switcher simulation
+        // Dictionary Translation Object
+        const translations = {
+            ar: {
+                title: "أحذية أوروبية أصليّة",
+                subtitle: "قطع فريدة مستعملة بحالة ممتازة",
+                badge: "100% ماركات أصلية مفحوصة",
+                heroTitle: "احصل على أحذية الماركات العالمية الجودة والأناقة بسعر استثنائي",
+                heroDesc: "جميع الأحذية قطعة واحدة فريدة بمقاس محدد. تصفح المقاس المناسب واطلبها مباشرة لتصلك حتى باب البيت أو المكتب.",
+                filterLabel: "تصفية حسب المقاس:",
+                btnAll: "الكل",
+                footerNote: "جميع الأحذية المعروضة أصلية 100% ومفحوصة بدقة.",
+                nextLangLabel: "FR"
+            },
+            fr: {
+                title: "Chaussures Originales",
+                subtitle: "Pièces uniques en excellent état",
+                badge: "100% Marques Originales Vérifiées",
+                heroTitle: "Obtenez des chaussures de marque à un prix exceptionnel",
+                heroDesc: "Chaque paire est unique. Choisissez votre pointure et commandez directement à domicile ou en bureau.",
+                filterLabel: "Filtrer par pointure:",
+                btnAll: "Tous",
+                footerNote: "Toutes les chaussures sont 100% originales et vérifiées.",
+                nextLangLabel: "AR"
+            }
+        };
+
         const langToggle = document.getElementById('langToggle');
         const langLabel = document.getElementById('langLabel');
         let currentLang = 'ar';
 
         langToggle.addEventListener('click', () => {
-            if (currentLang === 'ar') {
-                document.documentElement.setAttribute('dir', 'ltr');
-                document.documentElement.setAttribute('lang', 'fr');
-                langLabel.textContent = 'AR';
-                currentLang = 'fr';
-            } else {
-                document.documentElement.setAttribute('dir', 'rtl');
-                document.documentElement.setAttribute('lang', 'ar');
-                langLabel.textContent = 'FR';
-                currentLang = 'ar';
-            }
+            // Switch language key
+            currentLang = currentLang === 'ar' ? 'fr' : 'ar';
+            
+            // Set Document Direction and Language Attribute
+            document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            document.documentElement.setAttribute('lang', currentLang);
+
+            // Update DOM Elements Text
+            const langData = translations[currentLang];
+            document.getElementById('txt-title').textContent = langData.title;
+            document.getElementById('txt-subtitle').textContent = langData.subtitle;
+            document.getElementById('txt-badge').textContent = langData.badge;
+            document.getElementById('txt-hero-title').textContent = langData.heroTitle;
+            document.getElementById('txt-hero-desc').textContent = langData.heroDesc;
+            document.getElementById('txt-filter-label').textContent = langData.filterLabel;
+            document.getElementById('txt-btn-all').textContent = langData.btnAll;
+            document.getElementById('txt-footer-note').textContent = langData.footerNote;
+            
+            // Update Toggle Button Label
+            langLabel.textContent = langData.nextLangLabel;
         });
     </script>
 </body>
