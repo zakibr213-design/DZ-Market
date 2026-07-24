@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EUR Shoes | أحذية أوروبية أصليّة</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,7 +12,7 @@
             theme: {
                 extend: {
                     screens: {
-                        'xs': '380px'
+                        'xs': '360px'
                     }
                 }
             }
@@ -21,61 +21,70 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Cairo', sans-serif; }
+        * {
+            box-sizing: border-box;
+        }
+        html, body { 
+            font-family: 'Cairo', sans-serif; 
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
 
-    <!-- Header / Navbar المحسّن بالكامل -->
-    <header class="w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 sticky top-0 z-50 shadow-sm transition-colors duration-200">
-        <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-2">
+    <!-- Header / Navbar المُصمّم خصيصاً للموبايل -->
+    <header class="w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50 shadow-sm transition-colors duration-200">
+        <div class="w-full max-w-7xl mx-auto px-2.5 py-2 flex items-center justify-between gap-1">
             
             <!-- Logo & Brand Title -->
-            <div class="flex items-center gap-2.5 min-w-0">
-                <div class="bg-indigo-600 text-white font-black px-2.5 py-1.5 rounded-xl text-xs sm:text-sm tracking-wider shrink-0 shadow-md shadow-indigo-500/20">
+            <div class="flex items-center gap-1.5 min-w-0 flex-1 overflow-hidden">
+                <div class="bg-indigo-600 text-white font-black px-2 py-1 rounded-lg text-xs tracking-wider shrink-0 shadow-sm shadow-indigo-500/20">
                     EUR
                 </div>
-                <div class="flex flex-col min-w-0">
-                    <h1 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight truncate">
+                <div class="flex flex-col min-w-0 overflow-hidden">
+                    <h1 class="font-extrabold text-[11px] xs:text-xs sm:text-base text-slate-900 dark:text-white leading-tight truncate">
                         أحذية أوروبية أصليّة
                     </h1>
-                    <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 truncate hidden xs:block">
+                    <p class="text-[9px] xs:text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 truncate hidden xs:block">
                         قطع فريدة مستعملة بحالة ممتازة
                     </p>
                 </div>
             </div>
 
             <!-- Action Controls (Language, Dark Mode, Cart) -->
-            <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <div class="flex items-center gap-1 shrink-0">
                 
                 <!-- Language Toggle Button -->
-                <button id="langToggle" type="button" aria-label="Toggle Language" class="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold px-2.5 py-2 rounded-xl transition-all">
-                    <svg class="w-4 h-4 text-slate-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button id="langToggle" type="button" aria-label="Toggle Language" class="flex items-center gap-0.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold px-2 py-1.5 rounded-lg transition-all border border-slate-200 dark:border-slate-700 shrink-0">
+                    <svg class="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
                     </svg>
-                    <span id="langLabel">FR</span>
+                    <span id="langLabel" class="text-[10px] sm:text-xs">FR</span>
                 </button>
 
                 <!-- Dark Mode Toggle Button -->
-                <button id="themeToggle" type="button" aria-label="Toggle Theme" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-all">
+                <button id="themeToggle" type="button" aria-label="Toggle Theme" class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-all border border-slate-200 dark:border-slate-700 shrink-0">
                     <!-- Sun Icon -->
-                    <svg class="w-4 h-4 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-3.5 h-3.5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
                     </svg>
                     <!-- Moon Icon -->
-                    <svg class="w-4 h-4 dark:hidden text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-3.5 h-3.5 dark:hidden text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                     </svg>
                 </button>
 
                 <!-- Cart Button -->
-                <button type="button" aria-label="View Cart" class="relative p-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-md shadow-indigo-500/20 transition-all active:scale-95">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button type="button" aria-label="View Cart" class="relative p-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-sm transition-all active:scale-95 shrink-0">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                     </svg>
-                    <span class="absolute -top-1.5 -right-1.5 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900">
+                    <span class="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-black w-3.5 h-3.5 rounded-full flex items-center justify-center border border-white dark:border-slate-900">
                         1
                     </span>
                 </button>
@@ -85,48 +94,48 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="bg-gradient-to-b from-indigo-900 via-slate-900 to-slate-950 text-white py-12 px-4 text-center relative overflow-hidden">
-        <div class="max-w-3xl mx-auto space-y-4 relative z-10">
-            <span class="inline-block bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs px-3.5 py-1.5 rounded-full font-semibold">
+    <section class="bg-gradient-to-b from-indigo-950 via-slate-900 to-slate-950 text-white py-8 px-4 text-center relative overflow-hidden">
+        <div class="max-w-3xl mx-auto space-y-3 relative z-10">
+            <span class="inline-block bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[11px] sm:text-xs px-3 py-1 rounded-full font-bold">
                 100% ماركات أصلية مفحوصة
             </span>
-            <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight">
+            <h2 class="text-xl sm:text-3xl font-black leading-snug px-2">
                 احصل على أحذية الماركات العالمية الجودة والأناقة بسعر استثنائي
             </h2>
-            <p class="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl mx-auto">
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl mx-auto px-2">
                 جميع الأحذية قطعة واحدة فريدة بمقاس محدد. تصفح المقاس المناسب واطلبها مباشرة لتصلك حتى باب البيت أو المكتب.
             </p>
         </div>
     </section>
 
     <!-- Main Content / Size Filter & Products -->
-    <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+    <main class="max-w-7xl mx-auto px-3 py-6 flex-1 w-full space-y-4">
         
         <!-- Filter Card -->
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center gap-3">
-            <div class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold text-sm shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center gap-2.5">
+            <div class="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-bold text-xs shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
                 </svg>
                 <span>تصفية حسب المقاس:</span>
             </div>
             
-            <div class="flex flex-wrap gap-2">
-                <button class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-sm">الكل</button>
-                <button class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">40</button>
-                <button class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">41</button>
-                <button class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">42</button>
-                <button class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">43</button>
-                <button class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">44</button>
+            <div class="flex flex-wrap gap-1.5">
+                <button class="px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow-sm">الكل</button>
+                <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">40</button>
+                <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">41</button>
+                <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">42</button>
+                <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">43</button>
+                <button class="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300">44</button>
             </div>
         </div>
 
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-500 dark:text-slate-400 mt-auto">
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-4 text-center text-xs text-slate-500 dark:text-slate-400 mt-auto">
         <p class="font-medium">جميع الأحذية المعروضة أصلية 100% ومفحوصة بدقة.</p>
-        <p class="mt-1">© 2026 EUR Shoes. جميع الحقوق محفوظة.</p>
+        <p class="mt-1 text-[11px]">© 2026 EUR Shoes. جميع الحقوق محفوظة.</p>
     </footer>
 
     <!-- Interactive Script for Language & Dark Mode -->
@@ -137,7 +146,7 @@
             document.documentElement.classList.toggle('dark');
         });
 
-        // Simple Language Switcher simulation
+        // Language Switcher simulation
         const langToggle = document.getElementById('langToggle');
         const langLabel = document.getElementById('langLabel');
         let currentLang = 'ar';
